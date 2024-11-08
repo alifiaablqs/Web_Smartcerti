@@ -1,4 +1,15 @@
 <div class="sidebar">
+
+<!-- Sidebar user panel (optional) -->
+<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="assets/user.jpg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Alexander Pierce</a>
+        </div>
+      </div>
+
   <!-- Sidebar Search Form -->
   <div class="form-inline mt-2">
     <div class="input-group" data-widget="sidebar-search">
@@ -11,6 +22,7 @@
       </div>
     </div>
   </div>
+
   <!-- Sidebar Menu -->
   <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" 
@@ -22,6 +34,7 @@
           <p>Dashboard</p>
         </a>
       </li>
+      <li class="nav-header">Data Pengguna</li>
       <li class="nav-item">
         <a href="{{ url('/level') }}" class="nav-link {{ ($activeMenu == 'level')? 
         'active': ''}}">
@@ -36,6 +49,8 @@
           <p>Data User</p>
         </a> 
       </li>
+
+      <li class="nav-header">Manage Pelatihan dan Sertifikasi</li> 
       <li class="nav-item">
         <a href="{{ url('/kategori') }}" class="nav-link {{ ($activeMenu == 
         'kategori') ? 'active': ''}}">
@@ -46,34 +61,41 @@
       <li class="nav-item">
         <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
         'barang') ? 'active': ''}}">
-          <i class="nav-icon far fa-list-alt"></i>
+          <i class="nav-icon far fa-bookmark"></i>
           <p>Sertifikasi</p>
         </a>
       </li>
+
+      <li class="nav-header">Manage Vendor</li>      
       <li class="nav-item">
         <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok')? 
         'active': ''}}">
-          <i class="nav-icon fas fa-cubes"></i>
+          <i class="nav-icon fas fa-building"></i>
           <p>Vendor Pelatihan</p>
         </a>
       </li>
       <li class="nav-item">
         <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
         'penjualan') ? 'active': ''}}">
-          <i class="nav-icon fas fa-cash-register"></i>
+        <i class="nav-icon fas fa-building"></i>
           <p>Vendor Sertifikasi</p>
         </a>
       </li>
+
+      <li class="nav-header">Manage Mata Kuliah</li> 
       <li class="nav-item">
         <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
         'penjualan') ? 'active': ''}}">
-          <i class="nav-icon fas fa-cash-register"></i>
+          <i class="nav-icon fas fa-book"></i>
           <p>Mata Kuliah</p>
         </a>
-      </li><li class="nav-item">
+      </li>
+      
+      <li class="nav-header">Manage Bidang Minat</li> 
+      <li class="nav-item">
         <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
         'penjualan') ? 'active': ''}}">
-          <i class="nav-icon fas fa-cash-register"></i>
+          <i class="nav-icon fas fa-layer-group"></i>
           <p>Bidang Minat</p>
         </a>
     
