@@ -34,6 +34,8 @@
           <p>Dashboard</p>
         </a>
       </li>
+
+      
       <li class="nav-header">Data Pengguna</li>
       <li class="nav-item">
         <a href="{{ url('/level') }}" class="nav-link {{ ($activeMenu == 'level')? 
@@ -49,7 +51,7 @@
           <p>Data User</p>
         </a> 
       </li>
-
+      
       <li class="nav-header">Manage Pelatihan dan Sertifikasi</li> 
       <li class="nav-item">
         <a href="{{ url('/kategori') }}" class="nav-link {{ ($activeMenu == 
@@ -98,7 +100,19 @@
           <i class="nav-icon fas fa-layer-group"></i>
           <p>Bidang Minat</p>
         </a>
+        </li>
+
+        <li class="nav-header">Manage Periode</li> 
+      <li class="nav-item">
+        <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
+        'penjualan') ? 'active': ''}}">
+          <i class="nav-icon fas fa-calendar-alt"></i>
+          <p>Periode</p>
+        </a>
+        </li>
     
     </ul>
   </nav>   
 </div>
+
+
