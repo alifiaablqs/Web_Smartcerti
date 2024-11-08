@@ -84,6 +84,22 @@
         </a>
       </li>
 
+      <li class="nav-header">Manage Jenis</li>      
+      <li class="nav-item">
+        <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok')? 
+        'active': ''}}">
+          <i class="nav-icon fas fa-list-alt"></i>
+          <p>Jenis Pelatihan</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
+        'penjualan') ? 'active': ''}}">
+          <i class="nav-icon fas fa-list-alt"></i>
+          <p>Jenis Sertifikasi</p>
+        </a>
+      </li>
+
       <li class="nav-header">Manage Mata Kuliah</li> 
       <li class="nav-item">
         <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
