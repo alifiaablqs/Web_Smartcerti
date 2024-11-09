@@ -37,6 +37,11 @@
 @endsection
 
 @push('css')
+<style>
+        .card.card-outline.card-primary {
+            border-color: #375E97 !important;
+        }
+    </style>
 @endpush
 
 @push('js')
