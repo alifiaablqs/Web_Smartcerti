@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardPimpinanController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,10 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [DashboardPimpinanController ::class, 'index']);
+Route::get('/', [DashboardPimpinanController::class, 'index']);
 
 //m_level
-Route::group(['prefix' => 'level'], function(){
+Route::group(['prefix' => 'level'], function () {
     Route::get('/', [LevelController::class, 'index']);
     Route::post('/list', [LevelController::class, 'list']);
     Route::get('/create', [LevelController::class, 'create']);
@@ -28,4 +29,17 @@ Route::group(['prefix' => 'level'], function(){
     Route::get('/{id}/edit', [LevelController::class, 'edit']);
     Route::put('/{id}', [LevelController::class, 'update']);
     Route::delete('/{id}', [LevelController::class, 'destroy']);
+});
+
+//Route Mata Kuliah
+Route::group(['prefix' => 'matakuliah'], function () {
+    Route::get('/', [MataKuliahController::class, 'index']);
+    Route::post('/list', [MataKuliahController::class, 'list']);
+    Route::get('/create', [MataKuliahController::class, 'create']);
+    Route::post('/store', [MataKuliahController::class, 'store']);
+    Route::get('/{id}/show', [MataKuliahController::class, 'show']);
+    Route::get('/{id}/edit', [MataKuliahController::class, 'edit']);
+    Route::put('/{id}/update', [MataKuliahController::class, 'update']);
+    Route::get('/{id}/confirm', [MataKuliahController::class, 'confirm']);
+    Route::delete('/{id}/delete', [MataKuliahController::class, 'delete']);
 });

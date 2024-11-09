@@ -107,8 +107,8 @@
 
       <li class="nav-header">Manage Mata Kuliah</li> 
       <li class="nav-item">
-        <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
-        'penjualan') ? 'active': ''}}">
+        <a href="{{ url('/matakuliah') }}" class="nav-link {{ ($activeMenu == 
+        'matakuliah') ? 'active': ''}}">
           <i class="nav-icon fas fa-book"></i>
           <p>Mata Kuliah</p>
         </a>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ config('app.name', 'PWL Laravel Starter Code') }}</title>
+  <title>SMARTCERTI @yield('title')</title>
 
 <meta name="csrf-token" content="{{ csrf_token() }}"> {{-- untuk mengirimkan token laravel csrf pada setiap request ajax --}}
 
