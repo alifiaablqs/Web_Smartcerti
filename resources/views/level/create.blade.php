@@ -1,4 +1,4 @@
-@empty($mataKuliah)
+@empty($level)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,18 +11,18 @@
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('/matakuliah') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/level') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
-    <form action="{{ url('/matakuliah/' . $mataKuliah->id_matakuliah . '/delete_ajax') }}" method="POST" id="form-delete">
+    <form action="{{ url('/level/' . $level->id_level . '/delete_ajax') }}" method="POST" id="form-delete">
         @csrf
         @method('DELETE')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Mata Kuliah</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Level</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
@@ -33,18 +33,18 @@
                     </div>
                     <table class="table table-sm table-bordered table-striped">
                         <tr>
-                            <th class="text-right col-3">Kode Mata Kuliah:</th>
-                            <td class="col-9">{{ $mataKuliah->kode_matakuliah }}</td>
+                            <th class="text-right col-3">Kode Level:</th>
+                            <td class="col-9">{{ $level->kode_level }}</td>
                         </tr>
                         <tr>
-                            <th class="text-right col-3">Nama Mata Kuliah:</th>
-                            <td class="col-9">{{ $mataKuliah->nama_matakuliah }}</td>
+                            <th class="text-right col-3">Nama Level:</th>
+                            <td class="col-9">{{ $level->nama_level }}</td>
                         </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn" style="color: #EF5428; background-color: white; border-color: #EF5428;">Batal</button>
-                <button type="submit" class="btn" style="color: white; background-color: #EF5428; border-color: #EF5428;">Ya, Hapus</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
+                    <button type="submit" class="btn btn-primary">Ya, Hapus</button>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                dataMataKuliah.ajax.reload();
+                                dataLevel.ajax.reload();
                             } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {

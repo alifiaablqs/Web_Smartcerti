@@ -7,7 +7,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/matakuliah/create') }}')" class="btn btn-sm btn-success">Tambah</button>
+            <button onclick="modalAction(`{{ url('/matakuliah/create') }}`)" class="btn btn-success">Tambah</button>
             </div>
         </div>
         <div class="card-body">
@@ -75,11 +75,13 @@
                     },{
                         data: "nama_matakuliah",
                         ClassName: "",
+                        width: "25%",
                         orderable: true,
                         searchable: true
                     },{
                         data: "aksi",
                         ClassName: "",
+                        width: "25%",
                         orderable: false,
                         searchable: false
                     }

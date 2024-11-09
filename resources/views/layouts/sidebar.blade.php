@@ -118,7 +118,7 @@
       <li class="nav-item">
         <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
         'penjualan') ? 'active': ''}}">
-          <i class="nav-icon fas fa-layer-group"></i>
+          <i class="nav-icon fas fa-atom"></i>
           <p>Bidang Minat</p>
         </a>
         </li>

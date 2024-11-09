@@ -19,17 +19,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardPimpinanController::class, 'index']);
 
-//m_level
 Route::group(['prefix' => 'level'], function () {
     Route::get('/', [LevelController::class, 'index']);
     Route::post('/list', [LevelController::class, 'list']);
     Route::get('/create', [LevelController::class, 'create']);
-    Route::post('/', [LevelController::class, 'store']);
-    Route::get('/{id}', [LevelController::class, 'show']);
+    Route::post('/store', [LevelController::class, 'store']);
+    Route::get('/{id}/show', [LevelController::class, 'show']);
     Route::get('/{id}/edit', [LevelController::class, 'edit']);
-    Route::put('/{id}', [LevelController::class, 'update']);
-    Route::delete('/{id}', [LevelController::class, 'destroy']);
+    Route::put('/{id}update', [LevelController::class, 'update']);
+    Route::get('/{id}/confirm', [LevelController::class, 'confirm']);
+    Route::delete('/{id}/delete', [LevelController::class, 'delete']); 
 });
+
+
 
 //Route Mata Kuliah
 Route::group(['prefix' => 'matakuliah'], function () {
