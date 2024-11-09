@@ -1,4 +1,9 @@
 <div class="sidebar">
+ <!-- Brand Logo -->
+ <a href="{{ url('/') }}" class="brand-link">
+ <img src="{{ asset('assets/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 1; background-color: white;">
+      <span class="brand-text font-weight-bold text-light">SMARTCERTI</span>
+    </a>
 
 <!-- Sidebar user panel (optional) -->
 <div class="user-panel mt-3 pb-3 mb-3 d-flex">

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardPimpinanController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,16 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [WelcomeController ::class, 'index']);
+Route::get('/', [DashboardPimpinanController ::class, 'index']);
 
-
-use App\Http\Controllers\JenisPelatihanController;
-
-// Route::prefix('jenis_pelatihan')->group(function () {
-//     Route::get('/jenisPelatihan', [JenisPelatihanController::class, 'index'])->name('jenis_pelatihan.index');
-//     Route::post('jenisPelatihan/list', [JenisPelatihanController::class, 'list'])->name('jenis_pelatihan.list');
-//     Route::get('jenisPelatihan/import', [JenisPelatihanController::class, 'import'])->name('jenis_pelatihan.import');
-//     Route::get('jenisPelatihan/export_pdf', [JenisPelatihanController::class, 'exportPdf'])->name('jenis_pelatihan.export_pdf');
-//     Route::get('jenisPelatihan/export_excel', [JenisPelatihanController::class, 'exportExcel'])->name('jenis_pelatihan.export_excel');
-//     Route::post('jenisPelatihan/create_ajax', [JenisPelatihanController::class, 'createAjax'])->name('jenis_pelatihan.create_ajax');
-// });
+//m_level
+Route::group(['prefix' => 'level'], function(){
+    Route::get('/', [LevelController::class, 'index']);
+    Route::post('/list', [LevelController::class, 'list']);
+    Route::get('/create', [LevelController::class, 'create']);
+    Route::post('/', [LevelController::class, 'store']);
+    Route::get('/{id}', [LevelController::class, 'show']);
+    Route::get('/{id}/edit', [LevelController::class, 'edit']);
+    Route::put('/{id}', [LevelController::class, 'update']);
+    Route::delete('/{id}', [LevelController::class, 'destroy']);
+});
