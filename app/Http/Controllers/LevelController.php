@@ -57,7 +57,7 @@ class LevelController extends Controller
         return view('level.create');
     }
 
-    // Menyimpan data mata kuliah baru ajax
+    // Menyimpan data level baru ajax
     public function store(Request $request)
     {
         // cek apakah request berupa ajax
@@ -87,7 +87,7 @@ class LevelController extends Controller
         redirect('/');
     }
 
-    // Menampilkan detail mata kuliah
+    // Menampilkan detail level
     public function show(String $id)
     {
         $level = LevelModel::find($id);
@@ -95,7 +95,7 @@ class LevelController extends Controller
         return view('level.show', ['level' => $level]);
     }
 
-    // Menampilkan halaman form edit mata kuliah
+    // Menampilkan halaman form edit level
     public function edit(String $id)
     {
         $level = LevelModel::find($id);
@@ -104,7 +104,7 @@ class LevelController extends Controller
     }
 
 
-    // Menyimpan perubahan data mata kuliah
+    // Menyimpan perubahan data level
     public function update(Request $request, $id)
     {
         // cek apakah request dari ajax
@@ -140,14 +140,14 @@ class LevelController extends Controller
         return redirect('/');
     }
 
-    // Menampilkan hapus data mata kuliah ajax
+    // Menampilkan hapus data level ajax
     public function confirm(string $id) {
         $level = LevelModel::find($id);
         
         return view('level.confirm', ['level' => $level]);
     }
 
-    // Menghapus data mata kuliah ajax
+    // Menghapus data level ajax
     public function delete(Request $request, $id) {
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
