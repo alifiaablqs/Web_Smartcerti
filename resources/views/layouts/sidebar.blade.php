@@ -75,15 +75,15 @@
 
       <li class="nav-header">Manage Vendor</li>      
       <li class="nav-item">
-        <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok')? 
+        <a href="{{ url('/vendorpelatihan') }}" class="nav-link {{ ($activeMenu == 'vendorpelatihan')? 
         'active': ''}}">
           <i class="nav-icon fas fa-building"></i>
           <p>Vendor Pelatihan</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
-        'penjualan') ? 'active': ''}}">
+        <a href="{{ url('/vendorsertifikasi') }}" class="nav-link {{ ($activeMenu == 
+        'vendorsertifikasi') ? 'active': ''}}">
         <i class="nav-icon fas fa-building"></i>
           <p>Vendor Sertifikasi</p>
         </a>
