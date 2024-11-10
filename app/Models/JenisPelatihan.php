@@ -32,3 +32,4 @@ class JenisPelatihan extends Model
 
     // Optionally, define any relationships, accessors, or mutators here
 }
+//tesssssssssssssss
