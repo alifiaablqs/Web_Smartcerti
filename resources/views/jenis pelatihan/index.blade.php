@@ -6,10 +6,9 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/jenis_pelatihan/import') }}')" class="btn btn-info">Import Jenis Pelatihan</button>
                 <a href="{{ url('/jenis_pelatihan/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export PDF</a>
                 <a href="{{ url('/jenis_pelatihan/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Excel</a>
-                <button onclick="modalAction('{{ url('/jenis_pelatihan/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+                <button onclick="modalAction(`{{ url('/jenis_pelatihan/create') }}`)" class="btn btn-success">Tambah</button>
             </div>
         </div>
         <div class="card-body">

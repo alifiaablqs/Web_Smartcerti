@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardPimpinanController;
+use App\Http\Controllers\JenisSertifikasiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\MataKuliahController;
@@ -85,6 +86,19 @@ Route::group(['prefix' => 'vendorsertifikasi'], function () {
     Route::put('/{id}/update', [VendorSertifikasiController::class, 'update']);
     Route::get('/{id}/confirm', [VendorSertifikasiController::class, 'confirm']);
     Route::delete('/{id}/delete', [VendorSertifikasiController::class, 'delete']);
+});
+
+//Route Jenis Sertifikasi
+Route::group(['prefix' => 'jenissertifikasi'], function () {
+    Route::get('/', [JenisSertifikasiController::class, 'index']);
+    Route::post('/list', [JenisSertifikasiController::class, 'list']);
+    Route::get('/create', [JenisSertifikasiController::class, 'create']);
+    Route::post('/store', [JenisSertifikasiController::class, 'store']);
+    Route::get('/{id}/show', [JenisSertifikasiController::class, 'show']);
+    Route::get('/{id}/edit', [JenisSertifikasiController::class, 'edit']);
+    Route::put('/{id}/update', [JenisSertifikasiController::class, 'update']);
+    Route::get('/{id}/confirm', [JenisSertifikasiController::class, 'confirm']);
+    Route::delete('/{id}/delete', [JenisSertifikasiController::class, 'delete']);
 });
 //});
 

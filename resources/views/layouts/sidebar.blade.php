@@ -97,9 +97,10 @@
           <p>Jenis Pelatihan</p>
         </a>
       </li>
+
       <li class="nav-item">
-        <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
-        'penjualan') ? 'active': ''}}">
+        <a href="{{ url('/jenissertifikasi') }}" class="nav-link {{ ($activeMenu == 
+        'jenissertifikasi') ? 'active': ''}}">
           <i class="nav-icon fas fa-list-alt"></i>
           <p>Jenis Sertifikasi</p>
         </a>
