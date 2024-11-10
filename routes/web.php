@@ -3,6 +3,8 @@
 use App\Http\Controllers\DashboardPimpinanController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\MataKuliahController;
+use App\Http\Controllers\VendorPelatihanController;
+use App\Http\Controllers\VendorSertifikasiController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,4 +46,29 @@ Route::group(['prefix' => 'matakuliah'], function () {
     Route::put('/{id}/update', [MataKuliahController::class, 'update']);
     Route::get('/{id}/confirm', [MataKuliahController::class, 'confirm']);
     Route::delete('/{id}/delete', [MataKuliahController::class, 'delete']);
+});
+
+//Route Vendor Pelatihan
+Route::group(['prefix' => 'vendorpelatihan'], function () {
+    Route::get('/', [VendorPelatihanController::class, 'index']);
+    Route::post('/list', [VendorPelatihanController::class, 'list']);
+    Route::get('/create', [VendorPelatihanController::class, 'create']);
+    Route::post('/store', [VendorPelatihanController::class, 'store']);
+    Route::get('/{id}/show', [VendorPelatihanController::class, 'show']);
+    Route::get('/{id}/edit', [VendorPelatihanController::class, 'edit']);
+    Route::put('/{id}/update', [VendorPelatihanController::class, 'update']);
+    Route::get('/{id}/confirm', [VendorPelatihanController::class, 'confirm']);
+    Route::delete('/{id}/delete', [VendorPelatihanController::class, 'delete']);
+});
+//Route Vendor Sertifikasi
+Route::group(['prefix' => 'vendorsertifikasi'], function () {
+    Route::get('/', [VendorSertifikasiController::class, 'index']);
+    Route::post('/list', [VendorSertifikasiController::class, 'list']);
+    Route::get('/create', [VendorSertifikasiController::class, 'create']);
+    Route::post('/store', [VendorSertifikasiController::class, 'store']);
+    Route::get('/{id}/show', [VendorSertifikasiController::class, 'show']);
+    Route::get('/{id}/edit', [VendorSertifikasiController::class, 'edit']);
+    Route::put('/{id}/update', [VendorSertifikasiController::class, 'update']);
+    Route::get('/{id}/confirm', [VendorSertifikasiController::class, 'confirm']);
+    Route::delete('/{id}/delete', [VendorSertifikasiController::class, 'delete']);
 });
