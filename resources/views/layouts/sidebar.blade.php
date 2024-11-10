@@ -91,7 +91,7 @@
 
       <li class="nav-header">Manage Jenis</li>      
       <li class="nav-item">
-        <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok')? 
+        <a href="{{ url('/jenispelatihan') }}" class="nav-link {{ ($activeMenu == 'jenispelatihan')? 
         'active': ''}}">
           <i class="nav-icon fas fa-list-alt"></i>
           <p>Jenis Pelatihan</p>

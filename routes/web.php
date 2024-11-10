@@ -10,7 +10,7 @@ use App\Http\Controllers\VendorPelatihanController;
 use App\Http\Controllers\VendorSertifikasiController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\JenisPelatihanController;
 
 /*Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
 
@@ -100,5 +100,24 @@ Route::group(['prefix' => 'jenissertifikasi'], function () {
     Route::get('/{id}/confirm', [JenisSertifikasiController::class, 'confirm']);
     Route::delete('/{id}/delete', [JenisSertifikasiController::class, 'delete']);
 });
+
+
+
+
+Route::group(['prefix' => 'jenispelatihan'], function () {
+    Route::get('/', [JenisPelatihanController::class, 'index']);
+    Route::post('/list', [JenisPelatihanController::class, 'list']);
+    Route::get('/create', [JenisPelatihanController::class, 'create']);
+    Route::post('/store', [JenisPelatihanController::class, 'store']);
+    Route::get('/{id}/show', [JenisPelatihanController::class, 'show']);
+    Route::get('/{id}/edit', [JenisPelatihanController::class, 'edit']);
+    Route::put('/{id}/update', [JenisPelatihanController::class, 'update']);
+    Route::get('/{id}/confirm', [JenisPelatihanController::class, 'confirm']);
+    Route::delete('/{id}/delete', [JenisPelatihanController::class, 'delete']);
+    Route::get('/export_pdf', [JenisPelatihanController::class, 'export_pdf']); 
+    Route::post('/import_ajax', [JenisPelatihanController::class, 'import_ajax']);
+});
+
+
 //});
 
