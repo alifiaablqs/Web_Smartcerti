@@ -64,7 +64,7 @@
             $('#myModal').load(url, function() {
                 $('#myModal').modal('show');
             });
-        }
+        } 
         var dataJenisPelatihan;
         $(document).ready(function() {
             dataJenisPelatihan = $('#table-jenis-pelatihan').DataTable({
@@ -114,4 +114,7 @@
             });
         });
     </script>
+    
 @endpush
+
+

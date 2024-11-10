@@ -30,6 +30,7 @@ class JenisPelatihan extends Model
         'kode_pelatihan'
     ];
 
+ //tes ini
+ 
     // Optionally, define any relationships, accessors, or mutators here
 }
-//tesssssssssssssss
