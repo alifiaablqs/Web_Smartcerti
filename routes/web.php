@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardPimpinanController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\VendorPelatihanController;
@@ -8,19 +10,31 @@ use App\Http\Controllers\VendorSertifikasiController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
+/*Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
+
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('login', [AuthController::class, 'postlogin']);
+Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
+
+Route::middleware(['auth'])->group(function(){*/
 
 Route::get('/', [DashboardPimpinanController::class, 'index']);
+// user
+Route::group(['prefix' => 'user'], function() {
+    Route::get('/', [UserController::class, 'index']);        
+    Route::post('/list', [UserController::class, 'list']);  
+    Route::get('/create', [UserController::class, 'create']);   
+    Route::post('/store', [UserController::class, 'store']); 
+    Route::get('/{id}/show', [UserController::class, 'show']);  // Perbaikan URL
+    Route::get('/{id}/edit', [UserController::class, 'edit']); 
+    Route::put('/{id}/update', [UserController::class, 'update']); // Perbaikan URL
+    Route::get('/{id}/delete', [UserController::class, 'confirm']); 
+    Route::delete('/{id}/delete', [UserController::class, 'delete']); 
+});
 
+
+//level
 Route::group(['prefix' => 'level'], function () {
     Route::get('/', [LevelController::class, 'index']);
     Route::post('/list', [LevelController::class, 'list']);
@@ -72,3 +86,5 @@ Route::group(['prefix' => 'vendorsertifikasi'], function () {
     Route::get('/{id}/confirm', [VendorSertifikasiController::class, 'confirm']);
     Route::delete('/{id}/delete', [VendorSertifikasiController::class, 'delete']);
 });
+//});
+
