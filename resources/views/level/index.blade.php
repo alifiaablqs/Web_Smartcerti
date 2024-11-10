@@ -67,9 +67,9 @@
             });
         }
 
-        var tableLevel;
+        var dataLevel;
         $(document).ready(function() {
-            tableLevel = $('#table_user').DataTable({
+            dataLevel = $('#table_user').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -106,7 +106,7 @@
 
             // Reload DataTable saat filter berubah
             $('#id_level').on('change', function() {
-                tableLevel.ajax.reload();
+                dataLevel.ajax.reload();
             });
         });
     </script>

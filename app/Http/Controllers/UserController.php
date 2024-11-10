@@ -70,9 +70,9 @@ class UserController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'id_level' => 'required|integer',
-                'username' => 'required|string|min:3|unique:m_user,username',
+                'username' => 'required|string|min:3|unique:user,username',
                 'nama_lengkap' => 'required|string|max:255',
-                'password' => 'required|min:6'
+                'password' => 'required|min:5'
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -97,30 +97,13 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function show(string $id)
-    {
+    public function show(String $id) {
         $user = UserModel::with('level')->find($id);
-
-        $breadcrumb = (object) [
-            'title' => 'Detail User',
-            'list'  => ['Home', 'User', 'Detail']
-        ];
-
-        $page = (object) [
-            'title' => 'Detail User'
-        ];
-
-        $activeMenu = 'user';
-
-        return view('user.show', [
-            'breadcrumb' => $breadcrumb, 
-            'page' => $page, 
-            'user' => $user, 
-            'activeMenu' => $activeMenu
-        ]);
+    
+        return view('user.show', ['user' => $user]);
     }
 
-    // Menampilkan halaman form edit user ajax
+    // Menampilkan halaman form edit user
     public function edit(string $id)
     {
         // Mengambil data user berdasarkan ID
@@ -140,7 +123,7 @@ class UserController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'id_level' => 'required|integer',
-                'username' => 'required|max:20|unique:m_user,username,' . $id . ',user_id',
+                'username' => 'required|max:20|unique:user,username,' . $id . ',user_id',
                 'nama_lengkap' => 'required|max:255',
                 'password' => 'nullable|min:5|max:20',
             ];

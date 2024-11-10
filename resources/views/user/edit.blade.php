@@ -1,48 +1,61 @@
-<form action="{{ url('/user/store') }}" method="POST" id="form-tambah">
+@empty($user)
+<div id="modal-master" class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-danger">
+                <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
+                Data yang anda cari tidak ditemukan
+            </div>
+            <a href="{{ url('/user') }}" class="btn btn-warning">Kembali</a>
+        </div>
+    </div>
+</div>
+@else
+<form action="{{ url('/user/' . $user->user_id.'/update') }}" method="POST" id="form-edit">
     @csrf
+    @method('PUT')
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="exampleModalLabel">Edit Data User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <!-- Level Pengguna -->
                 <div class="form-group">
                     <label>Level Pengguna</label>
                     <select name="id_level" id="id_level" class="form-control" required>
                         <option value="">- Pilih Level -</option>
                         @foreach($level as $l)
-                            <option value="{{ $l->id_level }}">{{ $l->nama_level }}</option>
+                        <option {{ ($l->id_level == $user->id_level)? 'selected' : '' }}
+                            value="{{ $l->id_level }}">{{ $l->nama_level }}</option>
                         @endforeach
                     </select>
                     <small id="error-id_level" class="error-text form-text text-danger"></small>
                 </div>
-
-                <!-- Username -->
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" name="username" id="username" class="form-control" required>
+                    <input value="{{ $user->username }}" type="text" name="username"
+                        id="username" class="form-control" required>
                     <small id="error-username" class="error-text form-text text-danger"></small>
                 </div>
-
-                <!-- Nama -->
                 <div class="form-group">
-                    <label>Nama</label>
-                    <input type="text" name="nama_lengkap" id="nama_lengkap" class="form-control" required>
+                    <label>Nama Lengkap</label>
+                    <input value="{{ $user->nama_lengkap }}" type="text" name="nama_lengkap" id="nama_lengkap"
+                        class="form-control" required>
                     <small id="error-nama_lengkap" class="error-text form-text text-danger"></small>
                 </div>
-
-                <!-- Password -->
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" id="password" class="form-control" required>
+                    <input value="" type="password" name="password" id="password" class="form-control">
+                    <small class="form-text text-muted">Abaikan jika tidak ingin ubah
+                        password</small>
                     <small id="error-password" class="error-text form-text text-danger"></small>
                 </div>
             </div>
-
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
                 <button type="submit" class="btn btn-primary">Simpan</button>
@@ -50,10 +63,9 @@
         </div>
     </div>
 </form>
-
 <script>
     $(document).ready(function() {
-        $("#form-tambah").validate({
+        $("#form-edit").validate({
             rules: {
                 id_level: {
                     required: true,
@@ -70,8 +82,7 @@
                     maxlength: 100
                 },
                 password: {
-                    required: true,
-                    minlength: 5,
+                    minlength: 6,
                     maxlength: 20
                 }
             },
@@ -118,4 +129,4 @@
         });
     });
 </script>
-    
+@endempty
