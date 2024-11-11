@@ -12,6 +12,7 @@ use App\Http\Controllers\VendorSertifikasiController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JenisPelatihanController;
+use App\Http\Controllers\PeriodeController;
 
 Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
 
@@ -133,5 +134,22 @@ Route::prefix('bidangminat')->group(function () {
     Route::post('/import_ajax', [BidangMinatController::class, 'import_ajax']);
     Route::get('/{id}/confirm', [BidangMinatController::class, 'confirm']);
 });
+
+
+
+Route::prefix('periode')->group(function () {
+    Route::get('/', [PeriodeController::class, 'index']);
+    Route::post('/list', [PeriodeController::class, 'list']);
+    Route::get('/create', [PeriodeController::class, 'create']);
+    Route::post('/store', [PeriodeController::class, 'store']);
+    Route::get('/{id}/show', [PeriodeController::class, 'show']);
+    Route::get('/{id}/edit', [PeriodeController::class, 'edit']);
+    Route::put('/{id}/update', [PeriodeController::class, 'update']);
+    Route::post('/{id}/delete', [PeriodeController::class, 'delete']);
+    Route::get('/export_pdf', [PeriodeController::class, 'export_pdf']);
+    Route::post('/import_ajax', [PeriodeController::class, 'import_ajax']);
+    Route::get('/{id}/confirm', [PeriodeController::class, 'confirm']);
+});
+
 });
 
