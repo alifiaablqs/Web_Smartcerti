@@ -1,14 +1,14 @@
 @extends('layouts.template')
 @section('content')
-    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static"
-        data-keyboard="false" data-width="75%" aria-hidden="true"></div>
+
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
                 <a href="{{ url('/jenispelatihan/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export PDF</a>
                 <a href="{{ url('/jenispelatihan/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Excel</a>
-                <a href="{{ url('/jenispelatihan/import') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Import</a>
+                <button onclick="modalAction('{{ url('/jenispelatihan/import') }}')" class="btn btn-primary"><i class="fa fa-file-excel"></i> Import
+                </button>
                 <button onclick="modalAction(`{{ url('/jenispelatihan/create') }}`)" class="btn btn-success">Tambah</button>
             </div>
         </div>
@@ -56,6 +56,8 @@
             </table>
         </div>
     </div>
+    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static"
+    data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
 @push('css')
 @endpush

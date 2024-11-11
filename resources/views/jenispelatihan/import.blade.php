@@ -1,9 +1,9 @@
-<form action="{{ url('/jenispelatihan/import_ajax') }}" method="POST" id="form-import" enctype="multipart/form-data">
+<form action="{{ url('/bidangminat/import_ajax') }}" method="POST" id="form-import-bidang-minat" enctype="multipart/form-data">
     @csrf
-    <div id="modal-master" class="modal-dialog modal-lg" role="document">
+    <div id="modal-bidang-minat" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Import Data Jenis Pelatihan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Import Data Bidang Minat</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,15 +11,15 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>Download Template</label>
-                    <a href="{{ asset('template_jenis_pelatihan.xlsx') }}" class="btn btn-info btn-sm" download>
+                    <a href="{{ asset('template_bidang_minat.xlsx') }}" class="btn btn-info btn-sm" download>
                         <i class="fa fa-file-excel"></i> Download
                     </a>
                     <small id="error-template" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Pilih File</label>
-                    <input type="file" name="file_jenis_pelatihan" id="file_jenis_pelatihan" class="form-control" required>
-                    <small id="error-file_jenis_pelatihan" class="error-text form-text text-danger"></small>
+                    <input type="file" name="file_bidang_minat" id="file_bidang_minat" class="form-control" accept=".xlsx" required>
+                    <small id="error-file_bidang_minat" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -30,42 +30,53 @@
     </div>
 </form>
 
+
 <script>
     $(document).ready(function() {
-        $("#form-import").validate({
+        $("#form-import-bidang-minat").validate({
             rules: {
-                file_jenis_pelatihan: {
+                file_bidang_minat: {
                     required: true,
                     extension: "xlsx"
                 }
             },
+            messages: {
+                file_bidang_minat: {
+                    required: "Silakan pilih file untuk diunggah.",
+                    extension: "Format file harus .xlsx."
+                }
+            },
             submitHandler: function(form) {
-                var formData = new FormData(form); // Menggunakan FormData untuk menangani file
+                var formData = new FormData(form); // Menggunakan FormData untuk mengirim file
                 
                 $.ajax({
                     url: form.action,
-                    type: "POST", // Pastikan ini adalah POST
+                    type: "POST",
                     data: formData,
-                    processData: false, // Agar jQuery tidak memproses data
-                    contentType: false, // Agar jQuery tidak menetapkan jenis konten
+                    processData: false, // Menghindari pengolahan data otomatis oleh jQuery
+                    contentType: false, // Agar jQuery tidak menetapkan tipe konten
                     success: function(response) {
                         if(response.status) { // Jika sukses
-                            $('#modal-master').modal('hide');
+                            $('#modal-bidang-minat').modal('hide'); // Tutup modal
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',
                                 text: response.message
                             });
-                            tableJenisPelatihan.ajax.reload(); // Reload DataTable jenis pelatihan
-                        } else { // Jika error
+                            if (typeof dataBidangMinat !== 'undefined') {
+                                dataBidangMinat.ajax.reload(); // Reload DataTable bidang minat jika ada
+                            }
+                        } else { // Jika ada error dari server-side
                             $('.error-text').text('');
-                            $.each(response.msgField, function(prefix, val) {
-                                $('#error-' + prefix).text(val[0]);
-                            });
+                            if (response.msgField) {
+                                $.each(response.msgField, function(prefix, val) {
+                                    $('#error-' + prefix).text(val[0]);
+                                });
+                            }
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Terjadi Kesalahan',
-                                text: response.message
+                                text: response.message || 'Gagal mengunggah data.'
                             });
                         }
                     },
@@ -73,7 +84,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Gagal Mengunggah',
-                            text: 'Terjadi kesalahan saat mengunggah file.'
+                            text: 'Terjadi kesalahan saat mengunggah file. Pastikan file sesuai format.'
                         });
                     }
                 });
