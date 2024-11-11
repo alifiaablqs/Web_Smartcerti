@@ -126,8 +126,8 @@
 
         <li class="nav-header">Manage Periode</li> 
       <li class="nav-item">
-        <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
-        'penjualan') ? 'active': ''}}">
+        <a href="{{ url('/periode') }}" class="nav-link {{ ($activeMenu == 
+        'periode') ? 'active': ''}}">
           <i class="nav-icon fas fa-calendar-alt"></i>
           <p>Periode</p>
         </a>
