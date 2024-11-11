@@ -53,7 +53,7 @@
                     data: $(form).serialize(),
                     success: function(response) {
                         if (response.status) {
-                            $('#modal-bidang-minat').modal('hide'); // Hide the modal
+                            $('#myModal').modal('hide'); // Hide the modal
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',

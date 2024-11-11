@@ -54,7 +54,7 @@
                     data: $(form).serialize(),
                     success: function(response) {
                         if (response.status) {
-                            $('#modal-master').modal('hide'); // Pastikan ini sesuai dengan ID modal
+                            $('#myModal').modal('hide'); // Pastikan ini sesuai dengan ID modal
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',
