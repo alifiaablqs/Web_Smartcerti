@@ -51,7 +51,7 @@
                 },
                 alamat: {
                     required: true,
-                    maxlength: 100
+                    maxlength: 255
                 },
                 kota: {
                     required: true,

@@ -10,12 +10,12 @@
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('/jenis_pelatihan') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/jenispelatihan') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
-<form action="{{ url('/jenis_pelatihan/' . $jenisPelatihan->id_jenis_pelatihan . '/update') }}" method="POST" id="form-edit">
+<form action="{{ url('/jenispelatihan/' . $jenisPelatihan->id_jenis_pelatihan . '/update') }}" method="POST" id="form-edit">
     @csrf
     @method('PUT')
     <div id="modal-master" class="modal-dialog modal-lg" role="document">

@@ -56,5 +56,4 @@ class UserModel extends Authenticable implements JWTSubject
     public function hasRole($role): bool {
         return $this->level->kode_level == $role;
     }
-
 }

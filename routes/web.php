@@ -13,6 +13,7 @@ use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JenisPelatihanController;
 use App\Http\Controllers\PeriodeController;
+use App\Http\Controllers\SertifikasiController;
 
 Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
 
@@ -50,7 +51,18 @@ Route::group(['prefix' => 'level'], function () {
     Route::delete('/{id}/delete', [LevelController::class, 'delete']); 
 });
 
-
+//level
+Route::group(['prefix' => 'sertifikasi'], function () {
+    Route::get('/', [SertifikasiController::class, 'index']);
+    Route::post('/list', [SertifikasiController::class, 'list']);
+    Route::get('/create', [SertifikasiController::class, 'create']);
+    Route::post('/store', [SertifikasiController::class, 'store']);
+    Route::get('/{id}/show', [SertifikasiController::class, 'show']);
+    Route::get('/{id}/edit', [SertifikasiController::class, 'edit']);
+    Route::put('/{id}update', [SertifikasiController::class, 'update']);
+    Route::get('/{id}/confirm', [SertifikasiController::class, 'confirm']);
+    Route::delete('/{id}/delete', [SertifikasiController::class, 'delete']); 
+});
 
 //Route Mata Kuliah
 Route::group(['prefix' => 'matakuliah'], function () {

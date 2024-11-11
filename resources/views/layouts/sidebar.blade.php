@@ -66,8 +66,8 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
-        'barang') ? 'active': ''}}">
+        <a href="{{ url('/sertifikasi') }}" class="nav-link {{ ($activeMenu == 
+        'sertifikasi') ? 'active': ''}}">
           <i class="nav-icon far fa-bookmark"></i>
           <p>Sertifikasi</p>
         </a>

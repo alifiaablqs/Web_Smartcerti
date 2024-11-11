@@ -61,7 +61,7 @@ class VendorSertifikasiController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'nama'   => 'required|string|max:100|unique:vendor_sertifikasi,nama',
-                'alamat'   => 'required|string|max:100',
+                'alamat'   => 'required|string|max:255',
                 'kota'   => 'required|string|max:100',
                 'no_telp'   => 'required|string|max:20',
                 'alamat_web'   => 'required|string|max:255'

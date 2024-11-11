@@ -1,0 +1,227 @@
+<form action="{{ url('/sertifikasi/store') }}" method="POST" id="form-tambah">
+    @csrf
+    <div id="modal-master" class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Sertifikasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Level Pengguna -->
+                <div class="form-group">
+                    <label>Nama Vendor</label>
+                    <select name="id_vendor" id="id_vendor" class="form-control" required>
+                        <option value="">- Pilih Vendor -</option>
+                        @foreach($vendorSertifikasi as $l)
+                            <option value="{{ $l->id_vendor_sertifikasi }}">{{ $l->nama }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_vendor" class="error-text form-text text-danger"></small>
+                </div>
+
+                <div class="form-group">
+                    <label>Jenis Bidang</label>
+                    <select name="id_jenis_sertifikasi" id="id_jenis_sertifikasi" class="form-control" required>
+                        <option value="">- Pilih Jenis Bidang -</option>
+                        @foreach($jenisSertifikasi as $l)
+                            <option value="{{ $l->id_jenis_sertifikasi }}">{{ $l->nama_jenis_sertifikasi }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_jenis_sertifikasi" class="error-text form-text text-danger"></small>
+                </div>
+
+                <div class="form-group">
+                    <label>Tahun Periode</label>
+                    <select name="id_periode" id="id_periode" class="form-control" required>
+                        <option value="">- Pilih Tahun Periode -</option>
+                        @foreach($periode as $l)
+                            <option value="{{ $l->id_periode }}">{{ $l->tahun_periode }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_periode" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Nama Sertifikasi -->
+                <div class="form-group">
+                    <label>Nama Sertifikasi</label>
+                    <input type="text" name="nama_sertifikasi" id="nama_sertifikasi" class="form-control" required>
+                    <small id="error-nama_sertifikasi" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- No Sertifikasi -->
+                <div class="form-group">
+                    <label>No Sertifikasi</label>
+                    <input type="text" name="no_sertifikasi" id="no_sertifikasi" class="form-control" required>
+                    <small id="error-no_sertifikasi" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Jenis -->
+                <div class="form-group">
+                    <label>Jenis</label>
+                    <select name="jenis" id="jenis" class="form-control" required>
+                        <option value="Profesi">Profesi</option>
+                        <option value="Keahlian">Keahlian</option>
+                    </select>
+                    <small id="error-jenis" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Tanggal -->
+                <div class="form-group">
+                    <label>Tanggal</label>
+                    <input type="text" name="tanggal" id="tanggal" class="form-control" required>
+                    <small id="error-tanggal" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Bukti Sertifikasi -->
+                <div class="form-group">
+                    <label>Bukti Sertifikasi</label>
+                    <input type="text" name="bukti_sertifikasi" id="bukti_sertifikasi" class="form-control" required>
+                    <small id="error-bukti_sertifikasi" class="error-text form-text text-danger"></small>
+                </div>
+                
+                <!-- Masa Berlaku -->
+                <div class="form-group">
+                    <label>Masa Berlaku</label>
+                    <input type="text" name="masa_berlaku" id="masa_berlaku" class="form-control" required>
+                    <small id="error-masa_berlaku" class="error-text form-text text-danger"></small>
+                </div>
+                
+                <!-- Kuota Peserta -->
+                <div class="form-group">
+                    <label>Kuota Peserta</label>
+                    <input type="text" name="kuota_peserta" id="kuota_peserta" class="form-control" required>
+                    <small id="error-kuota_peserta" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Biaya -->
+                <div class="form-group">
+                    <label>Biaya</label>
+                    <input type="text" name="biaya" id="biaya" class="form-control" required>
+                    <small id="error-biaya" class="error-text form-text text-danger"></small>
+                </div>
+                
+                <div class="form-group">
+                    <label>Tag Bidang Minat</label>
+                    <input type="text" name="id_bidang_minat" id="id_bidang_minat" class="form-control" required>
+                    <small id="error-id_bidang_minat" class="error-text form-text text-danger"></small>
+                </div>
+
+                <div class="form-group">
+                    <label>Tag Mata Kuliah</label>
+                    <input type="text" name="id_matakuliah" id="id_matakuliah" class="form-control" required>
+                    <small id="error-id_matakuliah" class="error-text form-text text-danger"></small>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn" style="color: #EF5428; background-color: white; border-color: #EF5428;">Batal</button>
+            <button type="submit" class="btn"style="color: white; background-color: #EF5428; border-color: #EF5428;">Simpan</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function() {
+        $("#form-tambah").validate({
+            rules: {
+                id_vendor_sertifikasi: {
+                    required: true,
+                    number: true
+                },
+                id_jenis_sertifikasi: {
+                    required: true,
+                    number: true
+                },
+                id_periode: {
+                    required: true,
+                    number: true
+                },
+                nama_sertifikasi: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                },
+                no_sertifikasi: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                jenis: {
+                    required: true,
+                },
+                tanggal: {
+                    required: true,
+                },
+                bukti_sertifikasi: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                masa_berlaku: {
+                    required: true,
+                },
+                kuota_peserta: {
+                    required: true,
+                    number:true
+                },
+                biaya: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                id_bidang_minat: {
+                    required: true,
+                    number: true
+                },
+                id_matakuliah: {
+                    required: true,
+                    number: true
+                },
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: form.action,
+                    type: form.method,
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        if (response.status) {
+                            $('#myModal').modal('hide');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message
+                            });
+                            dataSertifikasi.ajax.reload();
+                        } else {
+                            $('.error-text').text('');
+                            $.each(response.msgField, function(prefix, val) {
+                                $('#error-' + prefix).text(val[0]);
+                            });
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Terjadi Kesalahan',
+                                text: response.message
+                            });
+                        }
+                    }
+                });
+                return false;
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
+</script>
+    
