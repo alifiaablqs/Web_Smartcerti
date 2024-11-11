@@ -8,7 +8,7 @@
             <div class="card-tools">
                 <a href="{{ url('/jenispelatihan/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export PDF</a>
                 <a href="{{ url('/jenispelatihan/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Excel</a>
-                <a href="{{ url('/jenispelatihan/import_ajax') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Import</a>
+                <a href="{{ url('/jenispelatihan/import') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Import</a>
                 <button onclick="modalAction(`{{ url('/jenispelatihan/create') }}`)" class="btn btn-success">Tambah</button>
             </div>
         </div>

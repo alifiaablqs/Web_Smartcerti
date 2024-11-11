@@ -116,6 +116,7 @@ Route::group(['prefix' => 'jenispelatihan'], function () {
     Route::get('/{id}/confirm', [JenisPelatihanController::class, 'confirm']);
     Route::delete('/{id}/delete', [JenisPelatihanController::class, 'delete']);
     Route::get('/export_pdf', [JenisPelatihanController::class, 'export_pdf']); 
+    Route::get('/import', [JenisPelatihanController::class, 'import']);
     Route::post('/import_ajax', [JenisPelatihanController::class, 'import_ajax']);
 });
 
