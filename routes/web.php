@@ -30,7 +30,7 @@ Route::group(['prefix' => 'user'], function() {
     Route::get('/{id}/show', [UserController::class, 'show']);  // Perbaikan URL
     Route::get('/{id}/edit', [UserController::class, 'edit']); 
     Route::put('/{id}/update', [UserController::class, 'update']); // Perbaikan URL
-    Route::get('/{id}/delete', [UserController::class, 'confirm']); 
+    Route::get('/{id}/confirm', [UserController::class, 'confirm']); 
     Route::delete('/{id}/delete', [UserController::class, 'delete']); 
 });
 

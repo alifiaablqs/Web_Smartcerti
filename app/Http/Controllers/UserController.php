@@ -51,7 +51,7 @@ class UserController extends Controller
             ->addColumn('aksi', function ($user) {
                 $btn = '<button onclick="modalAction(\'' . url('/user/' . $user->user_id . '/show') . '\')" class="btn btn-info btn-sm">Detail</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/user/' . $user->user_id . '/edit') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/user/' . $user->user_id . '/delete') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/user/' . $user->user_id . '/confirm') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
             })
             ->rawColumns(['aksi'])
@@ -70,7 +70,7 @@ class UserController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'id_level' => 'required|integer',
-                'username' => 'required|string|min:50|unique:user,username',
+                'username' => 'required|string|min:5|unique:user,username',
                 'nama_lengkap' => 'required|string|max:255',
                 'password' => 'required|min:5'
             ];
@@ -86,7 +86,12 @@ class UserController extends Controller
             }
 
             // Simpan data user dengan hanya field yang diperlukan
-            UserModel::create($request->only('username', 'nama_lengkap', 'password', 'id_level'));
+            UserModel::create([
+                'username'  => $request->username,
+                'nama_lengkap'      => $request->nama_lengkap,
+                'password'  => bcrypt($request->password), // password dienkripsi sebelum disimpan
+                'id_level'  => $request->id_level
+            ]);
 
             return response()->json([
                 'status' => true,
@@ -170,7 +175,7 @@ class UserController extends Controller
     }
 
     // Update ajax
-    public function delete_ajax(Request $request, $id)
+    public function delete(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $user = UserModel::find($id);

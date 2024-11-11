@@ -12,7 +12,7 @@ class AuthController extends Controller
     {
         // Jika pengguna sudah login, arahkan ke halaman dashboard
         if (Auth::check()) {
-            return redirect('/dashboard');
+            return redirect('/');
         }
         return view('auth.login'); // Menampilkan form login
     }
@@ -30,7 +30,7 @@ class AuthController extends Controller
                 return response()->json([
                     'status' => true,
                     'message' => 'Login Berhasil',
-                    'redirect' => url('/dashboard') // Arahkan ke dashboard setelah login
+                    'redirect' => url('/') // Arahkan ke dashboard setelah login
                 ]);
             }
 
@@ -45,7 +45,7 @@ class AuthController extends Controller
         $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
             // Jika login berhasil, arahkan ke dashboard
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/');
         }
 
         // Jika login gagal, kembalikan ke halaman login dengan pesan error
