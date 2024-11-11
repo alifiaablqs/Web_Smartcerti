@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BidangMinatController;
 use App\Http\Controllers\DashboardPimpinanController;
 use App\Http\Controllers\JenisSertifikasiController;
 use App\Http\Controllers\UserController;
@@ -118,6 +119,17 @@ Route::group(['prefix' => 'jenispelatihan'], function () {
     Route::post('/import_ajax', [JenisPelatihanController::class, 'import_ajax']);
 });
 
-
+Route::prefix('bidangminat')->group(function () {
+    Route::get('/', [BidangMinatController::class, 'index']);
+    Route::post('/list', [BidangMinatController::class, 'list']);
+    Route::get('/create', [BidangMinatController::class, 'create']);
+    Route::post('/store', [BidangMinatController::class, 'store']);
+    Route::get('/{id}/show', [BidangMinatController::class, 'show']);
+    Route::get('/{id}/edit', [BidangMinatController::class, 'edit']);
+    Route::post('/{id}/update', [BidangMinatController::class, 'update']);
+    Route::post('/{id}/delete', [BidangMinatController::class, 'delete']);
+    Route::get('/export_pdf', [BidangMinatController::class, 'export_pdf']);
+    Route::post('/import_ajax', [BidangMinatController::class, 'import_ajax']);
+});
 });
 
