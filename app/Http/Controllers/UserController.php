@@ -70,7 +70,7 @@ class UserController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'id_level' => 'required|integer',
-                'username' => 'required|string|min:3|unique:user,username',
+                'username' => 'required|string|min:50|unique:user,username',
                 'nama_lengkap' => 'required|string|max:255',
                 'password' => 'required|min:5'
             ];
@@ -123,7 +123,7 @@ class UserController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'id_level' => 'required|integer',
-                'username' => 'required|max:20|unique:user,username,' . $id . ',user_id',
+                'username' => 'required|max:50|unique:user,username,' . $id . ',user_id',
                 'nama_lengkap' => 'required|max:255',
                 'password' => 'nullable|min:5|max:20',
             ];

@@ -37,4 +37,12 @@ class UserModel extends Model
         return $this->belongsTo(LevelModel::class, 'id_level', 'id_level');
     }
 
+    public function getRoleName(): string {
+        return $this->level->nama_level;
+    }
+
+    public function hasRole($role): bool {
+        return $this->level->kode_level == $role;
+    }
+
 }

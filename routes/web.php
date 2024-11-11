@@ -12,13 +12,13 @@ use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JenisPelatihanController;
 
-/*Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
+Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'postlogin']);
 Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
-Route::middleware(['auth'])->group(function(){*/
+Route::middleware(['auth'])->group(function(){
 
 Route::get('/', [DashboardPimpinanController::class, 'index']);
 // user
@@ -103,7 +103,7 @@ Route::group(['prefix' => 'jenissertifikasi'], function () {
 
 
 
-
+//Route Jenis Pelatihan
 Route::group(['prefix' => 'jenispelatihan'], function () {
     Route::get('/', [JenisPelatihanController::class, 'index']);
     Route::post('/list', [JenisPelatihanController::class, 'list']);
@@ -119,5 +119,5 @@ Route::group(['prefix' => 'jenispelatihan'], function () {
 });
 
 
-//});
+});
 
