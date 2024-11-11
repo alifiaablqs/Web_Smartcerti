@@ -117,8 +117,8 @@
       
       <li class="nav-header">Manage Bidang Minat</li> 
       <li class="nav-item">
-        <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 
-        'penjualan') ? 'active': ''}}">
+        <a href="{{ url('/bidangminat') }}" class="nav-link {{ ($activeMenu == 
+        'bidangminat') ? 'active': ''}}">
           <i class="nav-icon fas fa-atom"></i>
           <p>Bidang Minat</p>
         </a>
