@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BidangMinatModel;
 use App\Models\BidangMinatSertifikasiModel;
 use App\Models\JenisSertifikasiModel;
+use App\Models\MataKuliahModel;
 use App\Models\MataKuliahSertifikasiModel;
 use App\Models\PeriodeModel;
 use App\Models\SertifikasiModel;
@@ -97,8 +99,9 @@ class SertifikasiController extends Controller
         $jenisSertifikasi = JenisSertifikasiModel::select('id_jenis_sertifikasi', 'nama_jenis_sertifikasi')->get();
         $periode = PeriodeModel::select('id_periode', 'tahun_periode')->get();
 
-        $bidangMinat = BidangMinatSertifikasiModel::select('id_bidang_minat');
-        $mataKuliah = MataKuliahSertifikasiModel::select('id_matakuliah');
+        $bidangMinat = BidangMinatModel::select('id_bidang_minat', 'nama_bidang_minat')->get();
+        $mataKuliah = MataKuliahModel::select('id_matakuliah', 'nama_matakuliah')->get();
+        // dd($mataKuliah);
 
         return view('sertifikasi.create')->with([
             'vendorSertifikasi' => $vendorSertifikasi,
@@ -125,7 +128,7 @@ class SertifikasiController extends Controller
                 'jenis' => 'required',
                 'tanggal' => 'required|date',
                 'bukti_sertifikasi' => 'nullable|string|max:255',
-                'masa_berlaku' => 'required|date',
+                'masa_berlaku' => 'required',
                 'kuota_peserta' => 'nullable|integer',
                 'biaya' => 'required|string|max:255',
             ];

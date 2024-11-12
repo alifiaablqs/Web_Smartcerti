@@ -14,7 +14,7 @@
                     <label>Nama Vendor</label>
                     <select name="id_vendor" id="id_vendor" class="form-control" required>
                         <option value="">- Pilih Vendor -</option>
-                        @foreach($vendorSertifikasi as $l)
+                        @foreach ($vendorSertifikasi as $l)
                             <option value="{{ $l->id_vendor_sertifikasi }}">{{ $l->nama }}</option>
                         @endforeach
                     </select>
@@ -25,7 +25,7 @@
                     <label>Jenis Bidang</label>
                     <select name="id_jenis_sertifikasi" id="id_jenis_sertifikasi" class="form-control" required>
                         <option value="">- Pilih Jenis Bidang -</option>
-                        @foreach($jenisSertifikasi as $l)
+                        @foreach ($jenisSertifikasi as $l)
                             <option value="{{ $l->id_jenis_sertifikasi }}">{{ $l->nama_jenis_sertifikasi }}</option>
                         @endforeach
                     </select>
@@ -36,7 +36,7 @@
                     <label>Tahun Periode</label>
                     <select name="id_periode" id="id_periode" class="form-control" required>
                         <option value="">- Pilih Tahun Periode -</option>
-                        @foreach($periode as $l)
+                        @foreach ($periode as $l)
                             <option value="{{ $l->id_periode }}">{{ $l->tahun_periode }}</option>
                         @endforeach
                     </select>
@@ -70,7 +70,7 @@
                 <!-- Tanggal -->
                 <div class="form-group">
                     <label>Tanggal</label>
-                    <input type="text" name="tanggal" id="tanggal" class="form-control" required>
+                    <input type="date" name="tanggal" id="tanggal" class="form-control" required>
                     <small id="error-tanggal" class="error-text form-text text-danger"></small>
                 </div>
 
@@ -80,14 +80,15 @@
                     <input type="text" name="bukti_sertifikasi" id="bukti_sertifikasi" class="form-control" required>
                     <small id="error-bukti_sertifikasi" class="error-text form-text text-danger"></small>
                 </div>
-                
+
                 <!-- Masa Berlaku -->
                 <div class="form-group">
                     <label>Masa Berlaku</label>
-                    <input type="text" name="masa_berlaku" id="masa_berlaku" class="form-control" required>
+                    <input type="number" min="1900" max="2099" step="1" value="2026"
+                        name="masa_berlaku" id="masa_berlaku" class="form-control" required>
                     <small id="error-masa_berlaku" class="error-text form-text text-danger"></small>
                 </div>
-                
+
                 <!-- Kuota Peserta -->
                 <div class="form-group">
                     <label>Kuota Peserta</label>
@@ -101,23 +102,38 @@
                     <input type="text" name="biaya" id="biaya" class="form-control" required>
                     <small id="error-biaya" class="error-text form-text text-danger"></small>
                 </div>
-                
+
                 <div class="form-group">
-                    <label>Tag Bidang Minat</label>
-                    <input type="text" name="id_bidang_minat" id="id_bidang_minat" class="form-control" required>
-                    <small id="error-id_bidang_minat" class="error-text form-text text-danger"></small>
+                    <label for="id_bidang_minat">
+                        Tag Bidang Minat
+                        <select multiple="multiple" name="bidang_minat[]" id="id_bidang_minat" class="js-example-basic-multiple js-states form-control form-control">
+                            @foreach ($bidangMinat as $item)
+                                <option value="{{ $item->id_bidang_minat }}">{{ $item->nama_bidang_minat }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <small id="error-id_bidang_minat" class="error-text form-text text-danger"></small>
+                    </label>
                 </div>
 
                 <div class="form-group">
-                    <label>Tag Mata Kuliah</label>
-                    <input type="text" name="id_matakuliah" id="id_matakuliah" class="form-control" required>
-                    <small id="error-id_matakuliah" class="error-text form-text text-danger"></small>
+                    <label for="mata_kuliah">
+                        Tag Mata Kuliah
+                        <select multiple="multiple" name="mata_kuliah[]" id="id_mata_kuliah" class="js-example-basic-multiple js-states form-control">
+                            @foreach ($mataKuliah as $item)
+                                <option value="{{ $item->id_matakuliah }}">{{ $item->nama_matakuliah }}</option>
+                            @endforeach
+                        </select>
+                        <small id="error-id_mata_kuliah" class="error-text form-text text-danger"></small>
+                    </label>
                 </div>
             </div>
 
             <div class="modal-footer">
-            <button type="button" data-dismiss="modal" class="btn" style="color: #EF5428; background-color: white; border-color: #EF5428;">Batal</button>
-            <button type="submit" class="btn"style="color: white; background-color: #EF5428; border-color: #EF5428;">Simpan</button>
+                <button type="button" data-dismiss="modal" class="btn"
+                    style="color: #EF5428; background-color: white; border-color: #EF5428;">Batal</button>
+                <button type="submit"
+                    class="btn"style="color: white; background-color: #EF5428; border-color: #EF5428;">Simpan</button>
             </div>
         </div>
     </div>
@@ -156,7 +172,7 @@
                     required: true,
                 },
                 bukti_sertifikasi: {
-                    required: true,
+                    required: false,
                     minlength: 3,
                     maxlength: 255
                 },
@@ -165,12 +181,11 @@
                 },
                 kuota_peserta: {
                     required: true,
-                    number:true
+                    number: true
                 },
                 biaya: {
                     required: true,
-                    minlength: 3,
-                    maxlength: 255
+                    number: true
                 },
                 id_bidang_minat: {
                     required: true,
@@ -222,6 +237,9 @@
                 $(element).removeClass('is-invalid');
             }
         });
+        $("#id_mata_kuliah, #id_bidang_minat").select2({
+            dropdownAutoWidth: true,
+            theme: "classic"
+        });
     });
 </script>
-    
