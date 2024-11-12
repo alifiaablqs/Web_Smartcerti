@@ -19,22 +19,6 @@
             @if (session('error'))
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
-            {{-- <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group row">
-                        <label class="col-1 control-label col-form-label">Filter:</label>
-                        <div class="col-3">
-                            <select class="form-control" id="id_level" name="id_level" required>
-                                <option value="">- Semua -</option>
-                                @foreach ($level as $item)
-                                    <option value="{{ $item->id_level }}">{{ $item->nama_level }}</option>
-                                @endforeach
-                            </select>
-                            <small class="form-text text-muted">Level Pengguna</small>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
             <table class="table table-bordered table-striped table-hover table-sm" id="table_sertifikasi">
                 <thead>
                     <tr>
@@ -48,10 +32,10 @@
                         <th>Tanggal</th>
                         <th>Bukti Sertifikasi</th>
                         <th>Masa Berlaku</th>
-                        {{-- <th>Kuota Peserta</th>
-                        <th>Biaya</th> --}}
-                        <th>Tag Bidang Minat</th>
-                        <th>Tag Mata Kuliah</th>
+                        <th>Kuota Peserta</th>
+                        <th>Biaya</th>
+                        {{-- <th>Tag Bidang Minat</th>
+                        <th>Tag Mata Kuliah</th> --}}
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -82,9 +66,6 @@
                     "url": "{{ url('sertifikasi/list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    // "data": function(d) {
-                    //     d.level_id = $('#id_level').val();
-                    // }
                 },
                 columns: [{
                     data: "DT_RowIndex",
@@ -156,14 +137,14 @@
                     searchable: false
                 },
                 {
-                    data: "bidang_minat_sertifikasi.id_bidang_minat",
+                    data: "kuota_peserta",
                     className: "",
                     width: "6%",
                     orderable: false,
                     searchable: false
                 },
                 {
-                    data: "mata_kuliah_sertifikasi.id_matakuliah",
+                    data: "biaya",
                     className: "",
                     width: "6%",
                     orderable: false,

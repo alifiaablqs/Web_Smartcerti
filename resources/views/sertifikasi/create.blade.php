@@ -9,16 +9,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Level Pengguna -->
                 <div class="form-group">
                     <label>Nama Vendor</label>
-                    <select name="id_vendor" id="id_vendor" class="form-control" required>
+                    <select name="id_vendor_sertifikasi" id="id_vendor_sertifikasi" class="form-control" required>
                         <option value="">- Pilih Vendor -</option>
                         @foreach ($vendorSertifikasi as $l)
                             <option value="{{ $l->id_vendor_sertifikasi }}">{{ $l->nama }}</option>
                         @endforeach
                     </select>
-                    <small id="error-id_vendor" class="error-text form-text text-danger"></small>
+                    <small id="error-id_vendor_sertifikasi" class="error-text form-text text-danger"></small>
                 </div>
 
                 <div class="form-group">
@@ -84,8 +83,7 @@
                 <!-- Masa Berlaku -->
                 <div class="form-group">
                     <label>Masa Berlaku</label>
-                    <input type="number" min="1900" max="2099" step="1" value="2026"
-                        name="masa_berlaku" id="masa_berlaku" class="form-control" required>
+                    <input type="date" name="masa_berlaku" id="masa_berlaku" class="form-control" required>
                     <small id="error-masa_berlaku" class="error-text form-text text-danger"></small>
                 </div>
 
@@ -106,26 +104,28 @@
                 <div class="form-group">
                     <label for="id_bidang_minat">
                         Tag Bidang Minat
-                        <select multiple="multiple" name="bidang_minat[]" id="id_bidang_minat" class="js-example-basic-multiple js-states form-control form-control">
-                            @foreach ($bidangMinat as $item)
-                                <option value="{{ $item->id_bidang_minat }}">{{ $item->nama_bidang_minat }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <small id="error-id_bidang_minat" class="error-text form-text text-danger"></small>
                     </label>
+                    <select multiple="multiple" name="id_bidang_minat[]" id="id_bidang_minat"
+                        class="js-example-basic-multiple js-states form-control form-control">
+                        @foreach ($bidangMinat as $item)
+                            <option value="{{ $item->id_bidang_minat }}">{{ $item->nama_bidang_minat }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_bidang_minat" class="error-text form-text text-danger"></small>
                 </div>
 
                 <div class="form-group">
-                    <label for="mata_kuliah">
+                    <label for="id_matakuliah">
                         Tag Mata Kuliah
-                        <select multiple="multiple" name="mata_kuliah[]" id="id_mata_kuliah" class="js-example-basic-multiple js-states form-control">
-                            @foreach ($mataKuliah as $item)
-                                <option value="{{ $item->id_matakuliah }}">{{ $item->nama_matakuliah }}</option>
-                            @endforeach
-                        </select>
-                        <small id="error-id_mata_kuliah" class="error-text form-text text-danger"></small>
                     </label>
+                    <select multiple="multiple" name="id_matakuliah[]" id="id_matakuliah"
+                        class="js-example-basic-multiple js-states form-control">
+                        @foreach ($mataKuliah as $item)
+                            <option value="{{ $item->id_matakuliah }}">{{ $item->nama_matakuliah }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_matakuliah" class="error-text form-text text-danger"></small>
                 </div>
             </div>
 
@@ -189,11 +189,9 @@
                 },
                 id_bidang_minat: {
                     required: true,
-                    number: true
                 },
                 id_matakuliah: {
                     required: true,
-                    number: true
                 },
             },
             submitHandler: function(form) {
@@ -237,7 +235,7 @@
                 $(element).removeClass('is-invalid');
             }
         });
-        $("#id_mata_kuliah, #id_bidang_minat").select2({
+        $("#id_matakuliah, #id_bidang_minat").select2({
             dropdownAutoWidth: true,
             theme: "classic"
         });

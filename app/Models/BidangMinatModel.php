@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class BidangMinatModel extends Model
 {
@@ -15,4 +16,12 @@ class BidangMinatModel extends Model
     protected $primaryKey = 'id_bidang_minat';
 
     protected $fillable = ['nama_bidang_minat', 'kode_bidang_minat'];
+
+    public function sertifikasi(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            SertifikasiModel::class,
+            'detail_bidang_minat_sertifikasi', // Nama tabel pivot
+        );
+    }
 }

@@ -74,10 +74,6 @@ class SertifikasiController extends Controller
         )
         ->with('sertifikasi', 'mata_kuliah');
 
-        // // Filter data user berdasarkan id_level jika ada
-        // if ($request->id_level) {
-        //     $users->where('id_level', $request->id_level);
-        // }
 
         // Mengembalikan data dengan DataTables
         return DataTables::of($sertifikasis, $bidangMinats, $mataKuliahs)
@@ -120,8 +116,8 @@ class SertifikasiController extends Controller
                 'id_jenis_sertifikasi' => 'required|integer',
                 'id_periode' => 'required|integer',
 
-                'id_bidang_minat' => 'required|integer',
-                'id_matakuliah' => 'required|integer',
+                'id_bidang_minat' => 'required',
+                'id_matakuliah' => 'required',
 
                 'nama_sertifikasi' => 'required|string|min:5',
                 'no_sertifikasi' => 'required|string|max:255',
@@ -144,7 +140,7 @@ class SertifikasiController extends Controller
             }
 
             // Simpan data user dengan hanya field yang diperlukan
-            SertifikasiModel::create([
+            $sertifikasi = SertifikasiModel::create([
                 'nama_sertifikasi'  => $request->nama_sertifikasi,
                 'no_sertifikasi'      => $request->no_sertifikasi,
                 'jenis'      => $request->jenis,
@@ -158,15 +154,8 @@ class SertifikasiController extends Controller
                 'id_periode'  => $request->id_periode
             ]);
 
-            BidangMinatSertifikasiModel::create([
-                'id_sertifikasi' => $request->id_sertifikasi,
-                'id_bidang_minat' => $request->id_bidang_minat
-            ]);
-
-            MataKuliahSertifikasiModel::create([
-                'id_sertifikasi' => $request->id_sertifikasi,
-                'id_matakuliah' => $request->id_matakuliah
-            ]);
+            $sertifikasi->bidang_minat_sertifikasi()->sync($request->id_bidang_minat);
+            $sertifikasi->mata_kuliah_sertifikasi()->sync($request->id_matakuliah);
 
             return response()->json([
                 'status' => true,

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SertifikasiModel extends Model
@@ -34,26 +35,36 @@ class SertifikasiModel extends Model
 
     public function vendor_sertifikasi(): BelongsTo
     {
-        return $this->belongsTo(LevelModel::class, 'id_vendor_sertifikasi', 'id_vendor_sertifikasi');
+        return $this->belongsTo(VendorSertifikasiModel::class, 'id_vendor_sertifikasi', 'id_vendor_sertifikasi');
     }
 
     public function jenis_sertifikasi(): BelongsTo
     {
-        return $this->belongsTo(LevelModel::class, 'id_jenis_sertifikasi', 'id_jenis_sertifikasi');
+        return $this->belongsTo(JenisSertifikasiModel::class, 'id_jenis_sertifikasi', 'id_jenis_sertifikasi');
     }
     
     public function periode(): BelongsTo
     {
-        return $this->belongsTo(LevelModel::class, 'id_periode', 'id_periode');
+        return $this->belongsTo(PeriodeModel::class, 'id_periode', 'id_periode');
     }
 
-    public function bidang_minat_sertifikasi(): HasMany
+    // public function bidang_minat_sertifikasi(): HasMany
+    // {
+    //     return $this->hasMany(BidangMinatSertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
+    // }
+
+    // public function mata_kuliah_sertifikasi(): HasMany
+    // {
+    //     return $this->hasMany(BidangMinatSertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
+    // }
+
+    public function bidang_minat_sertifikasi(): BelongsToMany
     {
-        return $this->hasMany(BidangMinatSertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
+        return $this->belongsToMany(BidangMinatModel::class, 'detail_bidang_minat_sertifikasi', 'id_sertifikasi','id_bidang_minat');
     }
 
-    public function mata_kuliah_sertifikasi(): HasMany
+    public function mata_kuliah_sertifikasi(): BelongsToMany
     {
-        return $this->hasMany(BidangMinatSertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
+        return $this->belongsToMany(MataKuliahModel::class, 'detail_matakuliah_sertifikasi', 'id_sertifikasi' ,'id_matakuliah');
     }
 }
