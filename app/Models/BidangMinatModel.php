@@ -17,18 +17,25 @@ class BidangMinatModel extends Model
 
     protected $fillable = ['nama_bidang_minat', 'kode_bidang_minat'];
 
-    public function sertifikasi(): BelongsToMany
+    // Relasi ke Sertifikasi
+    public function bidang_minat_sertifikasi(): BelongsToMany
     {
         return $this->belongsToMany(
             SertifikasiModel::class,
             'detail_bidang_minat_sertifikasi', // Nama tabel pivot
+            'id_bidang_minat', // Foreign key di tabel pivot
+            'id_sertifikasi' // Related key di tabel pivot
         );
     }
-    public function pelatihan(): BelongsToMany
+
+    // Relasi ke Pelatihan
+    public function bidang_minat_pelatihan(): BelongsToMany
     {
         return $this->belongsToMany(
             PelatihanModel::class,
             'detail_bidang_minat_pelatihan', // Nama tabel pivot
+            'id_bidang_minat', // Foreign key di tabel pivot
+            'id_pelatihan' // Related key di tabel pivot
         );
     }
 }

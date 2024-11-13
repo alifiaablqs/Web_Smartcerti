@@ -15,18 +15,25 @@ class MataKuliahModel extends Model
 
     protected $fillable = ['nama_matakuliah', 'kode_matakuliah'];
 
-    public function sertifikasi(): BelongsToMany
+    // Relasi ke Sertifikasi
+    public function mata_kuliah_sertifikasi(): BelongsToMany
     {
         return $this->belongsToMany(
             SertifikasiModel::class,
-            'detail_matakuliah_sertifikasi', // Nama tabel pivot
+            'detail_mata_kuliah_sertifikasi', // Nama tabel pivot
+            'id_matakuliah', // Foreign key di tabel pivot
+            'id_sertifikasi' // Related key di tabel pivot
         );
     }
-    public function pelatihan(): BelongsToMany
+
+    // Relasi ke Pelatihan
+    public function mata_kuliah_pelatihan(): BelongsToMany
     {
         return $this->belongsToMany(
             PelatihanModel::class,
-            'detail_matakuliah_pelatihan', // Nama tabel pivot
+            'detail_mata_kuliah_pelatihan', // Nama tabel pivot
+            'id_matakuliah', // Foreign key di tabel pivot
+            'id_pelatihan' // Related key di tabel pivot
         );
     }
 }

@@ -12,6 +12,7 @@ use App\Models\SertifikasiModel;
 use App\Models\VendorPelatihanModel;
 use App\Models\VendorSertifikasiModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -59,25 +60,18 @@ class SertifikasiController extends Controller
             'masa_berlaku',
             'kuota_peserta',
             'biaya',
-            )
-            ->with('vendor_sertifikasi', 'jenis_sertifikasi', 'periode');
-
-        $bidangMinats = BidangMinatSertifikasiModel::select(
-            'id_sertifikasi',
-            'id_bidang_minat'
         )
-        ->with('sertifikasi', 'bidang_minat');
-
-        $mataKuliahs = MataKuliahSertifikasiModel::select(
-            'id_sertifikasi',
-            'id_matakuliah'
-        )
-        ->with('sertifikasi', 'mata_kuliah');
-
+            ->with('vendor_sertifikasi', 'jenis_sertifikasi', 'periode', 'bidang_minat_sertifikasi', 'mata_kuliah_sertifikasi');
 
         // Mengembalikan data dengan DataTables
-        return DataTables::of($sertifikasis, $bidangMinats, $mataKuliahs)
+        return DataTables::of($sertifikasis)
             ->addIndexColumn()
+            ->addColumn('bidang_minat', function ($sertifikasi) {
+                return $sertifikasi->bidang_minat_sertifikasi->pluck('nama_bidang_minat')->implode(', ');
+            })
+            ->addColumn('mata_kuliah', function ($sertifikasi) {
+                return $sertifikasi->mata_kuliah_sertifikasi->pluck('nama_matakuliah')->implode(', ');
+            })
             ->addColumn('aksi', function ($sertifikasi) {
                 $btn = '<button onclick="modalAction(\'' . url('/sertifikasi/' . $sertifikasi->id_sertifikasi . '/show') . '\')" class="btn btn-info btn-sm">Detail</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/sertifikasi/' . $sertifikasi->id_sertifikasi . '/edit') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
@@ -107,8 +101,8 @@ class SertifikasiController extends Controller
             'mataKuliah' => $mataKuliah,
         ]);
     }
-    
-    public function store(Request $request) 
+
+    public function store(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
@@ -156,6 +150,14 @@ class SertifikasiController extends Controller
 
             $sertifikasi->bidang_minat_sertifikasi()->sync($request->id_bidang_minat);
             $sertifikasi->mata_kuliah_sertifikasi()->sync($request->id_matakuliah);
+
+            // Mendapatkan user yang sedang login
+            $userId = Auth::id();
+
+            // Tambahkan ke tabel detail_peserta_sertifikasi
+            if ($userId) {
+                $sertifikasi->peserta_sertifikasi()->attach($userId);
+            }
 
             return response()->json([
                 'status' => true,

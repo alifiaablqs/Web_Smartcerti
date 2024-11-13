@@ -27,15 +27,15 @@
                         <th>Jenis Bidang</th>
                         <th>Periode</th>
                         <th>Nama Sertifikasi</th>
-                        <th>No Sertifikasi</th>
+                        {{-- <th>No Sertifikasi</th> --}}
                         <th>Jenis</th>
                         <th>Tanggal</th>
-                        <th>Bukti Sertifikasi</th>
+                        {{-- <th>Bukti Sertifikasi</th> --}}
                         <th>Masa Berlaku</th>
                         <th>Kuota Peserta</th>
                         <th>Biaya</th>
-                        {{-- <th>Tag Bidang Minat</th>
-                        <th>Tag Mata Kuliah</th> --}}
+                        <th>Tag Bidang Minat</th>
+                        <th>Tag Mata Kuliah</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -67,13 +67,15 @@
                     "dataType": "json",
                     "type": "POST",
                 },
-                columns: [{
+                columns: [
+                {
                     data: "DT_RowIndex",
                     className: "text-center",
-                    width: "5%",
+                    width: "4%",
                     orderable: false,
                     searchable: false
-                }, {
+                },
+                {
                     data: "vendor_sertifikasi.nama",
                     className: "",
                     width: "9%",
@@ -101,13 +103,13 @@
                     orderable: true,
                     searchable: true
                 },
-                {
-                    data: "no_sertifikasi",
-                    className: "",
-                    width: "8%",
-                    orderable: false,
-                    searchable: true
-                },
+                // {
+                //     data: "no_sertifikasi",
+                //     className: "",
+                //     width: "8%",
+                //     orderable: false,
+                //     searchable: true
+                // },
                 {
                     data: "jenis",
                     className: "",
@@ -122,13 +124,13 @@
                     orderable: false,
                     searchable: false
                 },
-                {
-                    data: "bukti_sertifikasi",
-                    className: "",
-                    width: "8%",
-                    orderable: false,
-                    searchable: false
-                },
+                // {
+                //     data: "bukti_sertifikasi",
+                //     className: "",
+                //     width: "8%",
+                //     orderable: false,
+                //     searchable: false
+                // },
                 {
                     data: "masa_berlaku",
                     className: "",
@@ -139,7 +141,7 @@
                 {
                     data: "kuota_peserta",
                     className: "",
-                    width: "6%",
+                    width: "5%",
                     orderable: false,
                     searchable: false
                 },
@@ -151,9 +153,29 @@
                     searchable: false
                 },
                 {
+                    data: "bidang_minat",
+                    render: function (data, type, row) {
+                        return row.bidang_minat ? row.bidang_minat : '-';
+                    },
+                    className: "",
+                    width: "10%",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "mata_kuliah",
+                    render: function (data, type, row) {
+                        return row.mata_kuliah ? row.mata_kuliah : '-';
+                    },
+                    className: "",
+                    width: "10%",
+                    orderable: false,
+                    searchable: false
+                },
+                {
                     data: "aksi",
                     className: "",
-                    width: "12%",
+                    width: "9%",
                     orderable: false,
                     searchable: false
                 }]

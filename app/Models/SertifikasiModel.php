@@ -50,16 +50,16 @@ class SertifikasiModel extends Model
 
     public function bidang_minat_sertifikasi(): BelongsToMany
     {
-        return $this->belongsToMany(BidangMinatModel::class, 'detail_bidang_minat_sertifikasi', 'id_sertifikasi','id_bidang_minat');
+        return $this->belongsToMany(BidangMinatModel::class, 'detail_bidang_minat_sertifikasi', 'id_sertifikasi','id_bidang_minat')->withPivot('id_bidang_minat');;
     }
 
     public function mata_kuliah_sertifikasi(): BelongsToMany
     {
-        return $this->belongsToMany(MataKuliahModel::class, 'detail_matakuliah_sertifikasi', 'id_sertifikasi' ,'id_matakuliah');
+        return $this->belongsToMany(MataKuliahModel::class, 'detail_matakuliah_sertifikasi', 'id_sertifikasi' ,'id_matakuliah')->withPivot('id_matakuliah');
     }
 
-    public function user(): BelongsToMany
+    public function detail_peserta_sertifikasi(): BelongsToMany
     {
-        return $this->belongsToMany(UserModel::class, 'detail_peserta_sertifikas', 'id_sertifikasi' ,'user_id');
+        return $this->belongsToMany(UserModel::class, 'detail_peserta_sertifikasi', 'id_sertifikasi' ,'user_id');
     }
 }
