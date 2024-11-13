@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\BidangMinatController;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\api\MataKuliahController;
+use App\Http\Controllers\Api\SertifikasiController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,4 +48,10 @@ Route::post('mataKuliahs', [MataKuliahController::class, 'store']);
 Route::get('mataKuliahs/{mataKuliah}', [MataKuliahController::class, 'show']);
 Route::put('mataKuliahs/{mataKuliah}', [MataKuliahController::class, 'update']);
 Route::delete('mataKuliahs/{mataKuliah}', [MataKuliahController::class, 'destroy']);
+
+Route::get('sertifikasis', [SertifikasiController::class, 'index']);
+Route::post('sertifikasis', [SertifikasiController::class, 'store']);
+Route::get('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'show']);
+Route::put('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'update']);
+Route::delete('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'destroy']);
 });
