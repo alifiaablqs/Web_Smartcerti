@@ -48,16 +48,6 @@ class SertifikasiModel extends Model
         return $this->belongsTo(PeriodeModel::class, 'id_periode', 'id_periode');
     }
 
-    // public function bidang_minat_sertifikasi(): HasMany
-    // {
-    //     return $this->hasMany(BidangMinatSertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
-    // }
-
-    // public function mata_kuliah_sertifikasi(): HasMany
-    // {
-    //     return $this->hasMany(BidangMinatSertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
-    // }
-
     public function bidang_minat_sertifikasi(): BelongsToMany
     {
         return $this->belongsToMany(BidangMinatModel::class, 'detail_bidang_minat_sertifikasi', 'id_sertifikasi','id_bidang_minat');
@@ -66,5 +56,10 @@ class SertifikasiModel extends Model
     public function mata_kuliah_sertifikasi(): BelongsToMany
     {
         return $this->belongsToMany(MataKuliahModel::class, 'detail_matakuliah_sertifikasi', 'id_sertifikasi' ,'id_matakuliah');
+    }
+
+    public function user(): BelongsToMany
+    {
+        return $this->belongsToMany(UserModel::class, 'detail_peserta_sertifikas', 'id_sertifikasi' ,'user_id');
     }
 }

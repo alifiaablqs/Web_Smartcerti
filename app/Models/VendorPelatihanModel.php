@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class VendorPelatihanModel extends Model
 {
@@ -13,4 +14,8 @@ class VendorPelatihanModel extends Model
     protected $primaryKey = 'id_vendor_pelatihan';
 
     protected $fillable = ['nama', 'alamat', 'kota', 'no_telp', 'alamat_web'];
+
+    public function pelatihan(): HasMany {
+        return $this->hasMany(SertifikasiModel::class, 'id_vendor_sertifikasi', 'id_vendor_sertifikasi');
+    }
 }
