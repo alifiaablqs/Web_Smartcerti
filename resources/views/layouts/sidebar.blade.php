@@ -59,7 +59,7 @@
       
       <li class="nav-header">Manage Pelatihan dan Sertifikasi</li> 
       <li class="nav-item">
-        <a href="{{ url('/kategori') }}" class="nav-link {{ ($activeMenu == 
+        <a href="{{ url('/pelatihan') }}" class="nav-link {{ ($activeMenu == 
         'kategori') ? 'active': ''}}">
           <i class="nav-icon far fa-bookmark"></i>
           <p>Pelatihan</p>

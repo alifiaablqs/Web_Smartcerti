@@ -19,7 +19,7 @@ class UserController extends Controller
     }
     public function show(UserModel $user)
     {
-        return UserModel::find($user);
+        return $user;
     }
     public function update(Request $request, UserModel $user)
     {
