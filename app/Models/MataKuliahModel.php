@@ -22,4 +22,11 @@ class MataKuliahModel extends Model
             'detail_matakuliah_sertifikasi', // Nama tabel pivot
         );
     }
+    public function pelatihan(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            PelatihanModel::class,
+            'detail_matakuliah_pelatihan', // Nama tabel pivot
+        );
+    }
 }

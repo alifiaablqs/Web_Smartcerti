@@ -1,0 +1,243 @@
+<form action="{{ url('/pelatihan/store') }}" method="POST" id="form-tambah">
+    @csrf
+    <div id="modal-master" class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data pelatihan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nama Vendor</label>
+                    <select name="id_vendor_pelatihan" id="id_vendor_pelatihan" class="form-control" required>
+                        <option value="">- Pilih Vendor -</option>
+                        @foreach ($vendorpelatihan as $l)
+                            <option value="{{ $l->id_vendor_pelatihan }}">{{ $l->nama }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_vendor_pelatihan" class="error-text form-text text-danger"></small>
+                </div>
+
+                <div class="form-group">
+                    <label>Jenis Bidang</label>
+                    <select name="id_jenis_pelatihan" id="id_jenis_pelatihan" class="form-control" required>
+                        <option value="">- Pilih Jenis Bidang -</option>
+                        @foreach ($jenispelatihan as $l)
+                            <option value="{{ $l->id_jenis_pelatihan }}">{{ $l->nama_jenis_pelatihan }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_jenis_pelatihan" class="error-text form-text text-danger"></small>
+                </div>
+
+                <div class="form-group">
+                    <label>Tahun Periode</label>
+                    <select name="id_periode" id="id_periode" class="form-control" required>
+                        <option value="">- Pilih Tahun Periode -</option>
+                        @foreach ($periode as $l)
+                            <option value="{{ $l->id_periode }}">{{ $l->tahun_periode }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_periode" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Nama pelatihan -->
+                <div class="form-group">
+                    <label>Nama pelatihan</label>
+                    <input type="text" name="nama_pelatihan" id="nama_pelatihan" class="form-control" required>
+                    <small id="error-nama_pelatihan" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- No pelatihan -->
+                <div class="form-group">
+                    <label>No pelatihan</label>
+                    <input type="text" name="no_pelatihan" id="no_pelatihan" class="form-control" required>
+                    <small id="error-no_pelatihan" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Jenis -->
+                <div class="form-group">
+                    <label>Jenis</label>
+                    <select name="jenis" id="jenis" class="form-control" required>
+                        <option value="Profesi">Profesi</option>
+                        <option value="Keahlian">Keahlian</option>
+                    </select>
+                    <small id="error-jenis" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Tanggal -->
+                <div class="form-group">
+                    <label>Tanggal</label>
+                    <input type="date" name="tanggal" id="tanggal" class="form-control" required>
+                    <small id="error-tanggal" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Bukti pelatihan -->
+                <div class="form-group">
+                    <label>Bukti pelatihan</label>
+                    <input type="text" name="bukti_pelatihan" id="bukti_pelatihan" class="form-control" required>
+                    <small id="error-bukti_pelatihan" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Masa Berlaku -->
+                <div class="form-group">
+                    <label>Masa Berlaku</label>
+                    <input type="date" name="masa_berlaku" id="masa_berlaku" class="form-control" required>
+                    <small id="error-masa_berlaku" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Kuota Peserta -->
+                <div class="form-group">
+                    <label>Kuota Peserta</label>
+                    <input type="text" name="kuota_peserta" id="kuota_peserta" class="form-control" required>
+                    <small id="error-kuota_peserta" class="error-text form-text text-danger"></small>
+                </div>
+
+                <!-- Biaya -->
+                <div class="form-group">
+                    <label>Biaya</label>
+                    <input type="text" name="biaya" id="biaya" class="form-control" required>
+                    <small id="error-biaya" class="error-text form-text text-danger"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_bidang_minat">
+                        Tag Bidang Minat
+                    </label>
+                    <select multiple="multiple" name="id_bidang_minat[]" id="id_bidang_minat"
+                        class="js-example-basic-multiple js-states form-control form-control">
+                        @foreach ($bidangMinat as $item)
+                            <option value="{{ $item->id_bidang_minat }}">{{ $item->nama_bidang_minat }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_bidang_minat" class="error-text form-text text-danger"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_matakuliah">
+                        Tag Mata Kuliah
+                    </label>
+                    <select multiple="multiple" name="id_matakuliah[]" id="id_matakuliah"
+                        class="js-example-basic-multiple js-states form-control">
+                        @foreach ($mataKuliah as $item)
+                            <option value="{{ $item->id_matakuliah }}">{{ $item->nama_matakuliah }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_matakuliah" class="error-text form-text text-danger"></small>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn"
+                    style="color: #EF5428; background-color: white; border-color: #EF5428;">Batal</button>
+                <button type="submit"
+                    class="btn"style="color: white; background-color: #EF5428; border-color: #EF5428;">Simpan</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function() {
+        $("#form-tambah").validate({
+            rules: {
+                id_vendor_pelatihan: {
+                    required: true,
+                    number: true
+                },
+                id_jenis_pelatihan: {
+                    required: true,
+                    number: true
+                },
+                id_periode: {
+                    required: true,
+                    number: true
+                },
+                nama_pelatihan: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                },
+                no_pelatihan: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                jenis: {
+                    required: true,
+                },
+                tanggal: {
+                    required: true,
+                },
+                bukti_pelatihan: {
+                    required: false,
+                    minlength: 3,
+                    maxlength: 255
+                },
+                masa_berlaku: {
+                    required: true,
+                },
+                kuota_peserta: {
+                    required: true,
+                    number: true
+                },
+                biaya: {
+                    required: true,
+                    number: true
+                },
+                id_bidang_minat: {
+                    required: true,
+                },
+                id_matakuliah: {
+                    required: true,
+                },
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: form.action,
+                    type: form.method,
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        if (response.status) {
+                            $('#myModal').modal('hide');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message
+                            });
+                            dataPelatihan.ajax.reload();
+                        } else {
+                            $('.error-text').text('');
+                            $.each(response.msgField, function(prefix, val) {
+                                $('#error-' + prefix).text(val[0]);
+                            });
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Terjadi Kesalahan',
+                                text: response.message
+                            });
+                        }
+                    }
+                });
+                return false;
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+        $("#id_matakuliah, #id_bidang_minat").select2({
+            dropdownAutoWidth: true,
+            theme: "classic"
+        });
+    });
+</script>

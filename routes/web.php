@@ -12,6 +12,7 @@ use App\Http\Controllers\VendorSertifikasiController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JenisPelatihanController;
+use App\Http\Controllers\PelatihanController;
 use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\SertifikasiController;
 
@@ -62,6 +63,17 @@ Route::group(['prefix' => 'sertifikasi'], function () {
     Route::put('/{id}update', [SertifikasiController::class, 'update']);
     Route::get('/{id}/confirm', [SertifikasiController::class, 'confirm']);
     Route::delete('/{id}/delete', [SertifikasiController::class, 'delete']); 
+});
+Route::group(['prefix' => 'pelatihan'], function () {
+    Route::get('/', [PelatihanController::class, 'index']);
+    Route::post('/list', [PelatihanController::class, 'list']);
+    Route::get('/create', [PelatihanController::class, 'create']);
+    Route::post('/store', [PelatihanController::class, 'store']);
+    Route::get('/{id}/show', [PelatihanController::class, 'show']);
+    Route::get('/{id}/edit', [PelatihanController::class, 'edit']);
+    Route::put('/{id}update', [PelatihanController::class, 'update']);
+    Route::get('/{id}/confirm', [PelatihanController::class, 'confirm']);
+    Route::delete('/{id}/delete', [PelatihanController::class, 'delete']); 
 });
 
 //Route Mata Kuliah

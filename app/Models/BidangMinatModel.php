@@ -24,4 +24,11 @@ class BidangMinatModel extends Model
             'detail_bidang_minat_sertifikasi', // Nama tabel pivot
         );
     }
+    public function pelatihan(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            PelatihanModel::class,
+            'detail_bidang_minat_pelatihan', // Nama tabel pivot
+        );
+    }
 }
