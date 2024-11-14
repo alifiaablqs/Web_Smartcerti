@@ -117,7 +117,7 @@ class SertifikasiController extends Controller
                 'no_sertifikasi' => 'required|string|max:255',
                 'jenis' => 'required',
                 'tanggal' => 'required|date',
-                'bukti_sertifikasi' => 'nullable|string|max:255',
+                'bukti_sertifikasi' => 'nullable|mimes:pdf|max:5120',
                 'masa_berlaku' => 'required',
                 'kuota_peserta' => 'nullable|integer',
                 'biaya' => 'required|string|max:255',
@@ -133,13 +133,22 @@ class SertifikasiController extends Controller
                 ]);
             }
 
+            // Inisialisasi variabel untuk menyimpan path file
+            $bukti_sertifikasi = null;
+
+            // Cek apakah file bukti sertifikasi diunggah
+            if ($request->hasFile('bukti_sertifikasi')) {
+                $bukti_sertifikasi = time() . '_' . $request->file('bukti_sertifikasi')->getClientOriginalName();
+                $request->file('bukti_sertifikasi')->storeAs('public/images/', $bukti_sertifikasi);
+            }
+
             // Simpan data user dengan hanya field yang diperlukan
             $sertifikasi = SertifikasiModel::create([
                 'nama_sertifikasi'  => $request->nama_sertifikasi,
                 'no_sertifikasi'      => $request->no_sertifikasi,
                 'jenis'      => $request->jenis,
                 'tanggal'      => $request->tanggal,
-                'bukti_sertifikasi'      => $request->bukti_sertifikasi,
+                'bukti_sertifikasi'      => $bukti_sertifikasi,
                 'masa_berlaku'      => $request->masa_berlaku,
                 'kuota_peserta'      => $request->kuota_peserta,
                 'biaya'      => $request->biaya,
@@ -152,11 +161,12 @@ class SertifikasiController extends Controller
             $sertifikasi->mata_kuliah_sertifikasi()->sync($request->id_matakuliah);
 
             // Mendapatkan user yang sedang login
-            $userId = Auth::id();
+            $userId = Auth::user();
 
-            // Tambahkan ke tabel detail_peserta_sertifikasi
-            if ($userId) {
-                $sertifikasi->peserta_sertifikasi()->attach($userId);
+            // Cek apakah user bukan admin (id_level != 1)
+            if ($userId && $userId->id_level != 1) {
+                // Tambahkan ke tabel detail_peserta_sertifikasi
+                $sertifikasi->detail_peserta_sertifikasi()->attach($userId);
             }
 
             return response()->json([
@@ -165,5 +175,11 @@ class SertifikasiController extends Controller
             ]);
         }
         return redirect('/');
+    }
+
+    public function show(String $id) {
+        $sertifikasi = SertifikasiModel::with('vendor_sertifikasi', 'jenis_sertifikasi', 'periode', 'bidang_minat_sertifikasi', 'mata_kuliah_sertifikasi')->find($id);
+    
+        return view('sertifikasi.show', ['sertifikasi' => $sertifikasi]);
     }
 }

@@ -44,7 +44,7 @@ class UserModel extends Authenticable implements JWTSubject
 
     protected $hidden = ['password']; // jangan ditampilkan saat select
 
-    protected $cast = ['password' => 'hashed']; // casting password agar otomatis di hash
+    protected $casts = ['password' => 'hashed']; // casting password agar otomatis di hash
     
     public function level(): BelongsTo
     {

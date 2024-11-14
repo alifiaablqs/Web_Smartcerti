@@ -1,4 +1,4 @@
-<form action="{{ url('/sertifikasi/store') }}" method="POST" id="form-tambah">
+<form action="{{ url('/sertifikasi/store') }}" method="POST" id="form-tambah" enctype="multipart/form-data">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -76,7 +76,7 @@
                 <!-- Bukti Sertifikasi -->
                 <div class="form-group">
                     <label>Bukti Sertifikasi</label>
-                    <input type="text" name="bukti_sertifikasi" id="bukti_sertifikasi" class="form-control" required>
+                    <input type="file" name="bukti_sertifikasi" id="bukti_sertifikasi" class="form-control" required>
                     <small id="error-bukti_sertifikasi" class="error-text form-text text-danger"></small>
                 </div>
 
@@ -90,14 +90,14 @@
                 <!-- Kuota Peserta -->
                 <div class="form-group">
                     <label>Kuota Peserta</label>
-                    <input type="text" name="kuota_peserta" id="kuota_peserta" class="form-control" required>
+                    <input type="number" name="kuota_peserta" id="kuota_peserta" class="form-control" required>
                     <small id="error-kuota_peserta" class="error-text form-text text-danger"></small>
                 </div>
 
                 <!-- Biaya -->
                 <div class="form-group">
                     <label>Biaya</label>
-                    <input type="text" name="biaya" id="biaya" class="form-control" required>
+                    <input type="number" name="biaya" id="biaya" class="form-control" required>
                     <small id="error-biaya" class="error-text form-text text-danger"></small>
                 </div>
 
@@ -172,9 +172,8 @@
                     required: true,
                 },
                 bukti_sertifikasi: {
-                    required: false,
-                    minlength: 3,
-                    maxlength: 255
+                    required: true,
+                    extension: "pdf"
                 },
                 masa_berlaku: {
                     required: true,
@@ -195,10 +194,13 @@
                 },
             },
             submitHandler: function(form) {
+                var formData = new FormData(form);
                 $.ajax({
                     url: form.action,
                     type: form.method,
-                    data: $(form).serialize(),
+                    data: formData,
+                    contentType: false,
+                    processData: false, 
                     success: function(response) {
                         if (response.status) {
                             $('#myModal').modal('hide');
