@@ -47,7 +47,7 @@ Route::group(['prefix' => 'level'], function () {
     Route::post('/store', [LevelController::class, 'store']);
     Route::get('/{id}/show', [LevelController::class, 'show']);
     Route::get('/{id}/edit', [LevelController::class, 'edit']);
-    Route::put('/{id}update', [LevelController::class, 'update']);
+    Route::put('/{id}/update', [LevelController::class, 'update']);
     Route::get('/{id}/confirm', [LevelController::class, 'confirm']);
     Route::delete('/{id}/delete', [LevelController::class, 'delete']); 
 });
@@ -60,7 +60,7 @@ Route::group(['prefix' => 'sertifikasi'], function () {
     Route::post('/store', [SertifikasiController::class, 'store']);
     Route::get('/{id}/show', [SertifikasiController::class, 'show']);
     Route::get('/{id}/edit', [SertifikasiController::class, 'edit']);
-    Route::put('/{id}update', [SertifikasiController::class, 'update']);
+    Route::put('/{id}/update', [SertifikasiController::class, 'update']);
     Route::get('/{id}/confirm', [SertifikasiController::class, 'confirm']);
     Route::delete('/{id}/delete', [SertifikasiController::class, 'delete']); 
 });
@@ -71,7 +71,7 @@ Route::group(['prefix' => 'pelatihan'], function () {
     Route::post('/store', [PelatihanController::class, 'store']);
     Route::get('/{id}/show', [PelatihanController::class, 'show']);
     Route::get('/{id}/edit', [PelatihanController::class, 'edit']);
-    Route::put('/{id}update', [PelatihanController::class, 'update']);
+    Route::put('/{id}/update', [PelatihanController::class, 'update']);
     Route::get('/{id}/confirm', [PelatihanController::class, 'confirm']);
     Route::delete('/{id}/delete', [PelatihanController::class, 'delete']); 
 });
