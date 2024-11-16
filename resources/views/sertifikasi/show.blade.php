@@ -69,13 +69,23 @@
                         <th class="text-right col-3">Biaya</th>
                         <td class="col-9">{{ $sertifikasi->biaya }}</td>
                     </tr>
+
+                    @if (Auth::user()->id_level == 1)
+                    <tr>
+                        <th class="text-right col-3">Nama Peserta</th>
+                        <td class="col-9">
+                            {{ $sertifikasi->detail_peserta_sertifikasi->pluck('nama_lengkap')->implode(', ') }}</td>
+                    </tr>
+                    @endif
                     <tr>
                         <th class="text-right col-3">Bidang Minat</th>
-                        <td class="col-9">{{ $sertifikasi->bidang_minat_sertifikasi->pluck('nama_bidang_minat')->implode(', '); }}</td>
+                        <td class="col-9">
+                            {{ $sertifikasi->bidang_minat_sertifikasi->pluck('nama_bidang_minat')->implode(', ') }}</td>
                     </tr>
                     <tr>
                         <th class="text-right col-3">Mata Kuliah</th>
-                        <td class="col-9">{{ $sertifikasi->mata_kuliah_sertifikasi->pluck('nama_matakuliah')->implode(', '); }}</td>
+                        <td class="col-9">
+                            {{ $sertifikasi->mata_kuliah_sertifikasi->pluck('nama_matakuliah')->implode(', ') }}</td>
                     </tr>
                     <tr>
                         <th class="text-right col-3">Bukti Sertifikasi</th>
@@ -84,12 +94,13 @@
                                 @php
                                     // Ambil nama file tanpa path
                                     $fullFileName = basename($sertifikasi->bukti_sertifikasi);
-                                    
+
                                     // Hilangkan tanggal di depan
                                     $cleanFileName = preg_replace('/^\d{10}_/', '', $fullFileName);
                                 @endphp
-                    
-                                <a href="{{ url('storage/images/' . $sertifikasi->bukti_sertifikasi) }}" target="_blank" download>
+
+                                <a href="{{ url('storage/images/' . $sertifikasi->bukti_sertifikasi) }}" target="_blank"
+                                    download>
                                     {{ $cleanFileName }}
                                 </a>
                             @else
@@ -97,7 +108,7 @@
                             @endif
                         </td>
                     </tr>
-                    </table>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-default">Kembali</button>

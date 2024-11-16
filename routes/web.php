@@ -26,7 +26,7 @@ Route::middleware(['auth'])->group(function(){
 
 Route::get('/', [DashboardPimpinanController::class, 'index']);
 // user
-Route::group(['prefix' => 'user'], function() {
+Route::group(['prefix' => 'user', 'middleware' => 'authorize:ADM,PMN,DSN'], function() {
     Route::get('/', [UserController::class, 'index']);        
     Route::post('/list', [UserController::class, 'list']);  
     Route::get('/create', [UserController::class, 'create']);   
@@ -40,7 +40,7 @@ Route::group(['prefix' => 'user'], function() {
 
 
 //level
-Route::group(['prefix' => 'level'], function () {
+Route::group(['prefix' => 'level', 'middleware' => 'authorize:ADM'], function () {
     Route::get('/', [LevelController::class, 'index']);
     Route::post('/list', [LevelController::class, 'list']);
     Route::get('/create', [LevelController::class, 'create']);

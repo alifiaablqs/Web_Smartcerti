@@ -51,12 +51,19 @@ class UserModel extends Authenticable implements JWTSubject
         return $this->belongsTo(LevelModel::class, 'id_level', 'id_level');
     }
 
+    // Mendapatkan nama role
     public function getRoleName(): string {
-        return $this->level->nama_level;
+        return $this->level->level_nama;
     }
 
+    // Cek apakah user memiliki role tertentu
     public function hasRole($role): bool {
         return $this->level->kode_level == $role;
+    }
+
+    // Mendapatkan kode role
+    public function getRole() {
+        return $this->level->kode_level;
     }
 
     public function detail_peserta_pelatihan(): BelongsToMany
@@ -65,7 +72,7 @@ class UserModel extends Authenticable implements JWTSubject
     }
     public function detail_peserta_sertifikasi(): BelongsToMany
     {
-        return $this->belongsToMany(SertifikasiModel::class, 'detail_peserta_sertifikasi', 'user_id' ,'id_sertifikasi');
+        return $this->belongsToMany(SertifikasiModel::class, 'detail_peserta_sertifikasi', 'user_id' ,'id_sertifikasi')->withPivot('id_sertifikasi');
     }
     public function detail_daftar_user_bidang_minat(): BelongsToMany
     {

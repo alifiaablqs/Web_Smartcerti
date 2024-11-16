@@ -101,6 +101,19 @@
                     <small id="error-biaya" class="error-text form-text text-danger"></small>
                 </div>
 
+                @if (Auth::user()->id_level == 1)
+                    <div class="form-group">
+                        <label>Nama Peserta</label>
+                        <select name="user_id" id="user_id" class="form-control" required>
+                            <option value="">- Pilih Peserta Sertifikasi -</option>
+                            @foreach ($user as $l)
+                                <option value="{{ $l->user_id }}">{{ $l->nama_lengkap }}</option>
+                            @endforeach
+                        </select>
+                        <small id="error-user_id" class="error-text form-text text-danger"></small>
+                    </div>
+                @endif
+
                 <div class="form-group">
                     <label for="id_bidang_minat">
                         Tag Bidang Minat
@@ -141,6 +154,7 @@
 
 <script>
     $(document).ready(function() {
+        var isAdmin = {{ Auth::user()->id_level == 1 ? 'true' : 'false' }};
         $("#form-tambah").validate({
             rules: {
                 id_vendor_sertifikasi: {
@@ -192,6 +206,11 @@
                 id_matakuliah: {
                     required: true,
                 },
+                user_id: {
+                    required: function() {
+                        return isAdmin;
+                    }
+                }
             },
             submitHandler: function(form) {
                 var formData = new FormData(form);
@@ -200,7 +219,7 @@
                     type: form.method,
                     data: formData,
                     contentType: false,
-                    processData: false, 
+                    processData: false,
                     success: function(response) {
                         if (response.status) {
                             $('#myModal').modal('hide');

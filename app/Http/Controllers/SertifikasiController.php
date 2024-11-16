@@ -9,6 +9,7 @@ use App\Models\MataKuliahModel;
 use App\Models\MataKuliahSertifikasiModel;
 use App\Models\PeriodeModel;
 use App\Models\SertifikasiModel;
+use App\Models\UserModel;
 use App\Models\VendorPelatihanModel;
 use App\Models\VendorSertifikasiModel;
 use Illuminate\Http\Request;
@@ -44,24 +45,49 @@ class SertifikasiController extends Controller
     }
 
     // Ambil data user dalam bentuk json untuk datatables
-    public function list(Request $request)
+    public function list()
     {
         // Mengambil data user beserta level
-        $sertifikasis = SertifikasiModel::select(
-            'id_sertifikasi',
-            'id_vendor_sertifikasi',
-            'id_jenis_sertifikasi',
-            'id_periode',
-            'nama_sertifikasi',
-            'no_sertifikasi',
-            'jenis',
-            'tanggal',
-            'bukti_sertifikasi',
-            'masa_berlaku',
-            'kuota_peserta',
-            'biaya',
-        )
-            ->with('vendor_sertifikasi', 'jenis_sertifikasi', 'periode', 'bidang_minat_sertifikasi', 'mata_kuliah_sertifikasi');
+        /** @var User */
+        $user = Auth::user();
+
+        // Jika user bukan admin (id_level ≠ 1), tampilkan hanya sertifikasi miliknya
+        if ($user->id_level != 1) {
+            // Mengambil sertifikasi yang hanya dimiliki oleh user yang sedang login
+            $sertifikasis = $user->detail_peserta_sertifikasi()
+                ->select(
+                    'sertifikasi.id_sertifikasi',
+                    'sertifikasi.id_vendor_sertifikasi',
+                    'sertifikasi.id_jenis_sertifikasi',
+                    'sertifikasi.id_periode',
+                    'sertifikasi.nama_sertifikasi',
+                    'sertifikasi.no_sertifikasi',
+                    'sertifikasi.jenis',
+                    'sertifikasi.tanggal',
+                    'sertifikasi.bukti_sertifikasi',
+                    'sertifikasi.masa_berlaku',
+                    'sertifikasi.kuota_peserta',
+                    'sertifikasi.biaya'
+                )
+                ->with('vendor_sertifikasi', 'jenis_sertifikasi', 'periode', 'bidang_minat_sertifikasi', 'mata_kuliah_sertifikasi', 'detail_peserta_sertifikasi');
+        } else {
+            // Jika admin (id_level = 1), tampilkan semua sertifikasi
+            $sertifikasis = SertifikasiModel::select(
+                'id_sertifikasi',
+                'id_vendor_sertifikasi',
+                'id_jenis_sertifikasi',
+                'id_periode',
+                'nama_sertifikasi',
+                'no_sertifikasi',
+                'jenis',
+                'tanggal',
+                'bukti_sertifikasi',
+                'masa_berlaku',
+                'kuota_peserta',
+                'biaya'
+            )
+                ->with('vendor_sertifikasi', 'jenis_sertifikasi', 'periode', 'bidang_minat_sertifikasi', 'mata_kuliah_sertifikasi', 'detail_peserta_sertifikasi');
+        }
 
         // Mengembalikan data dengan DataTables
         return DataTables::of($sertifikasis)
@@ -71,6 +97,9 @@ class SertifikasiController extends Controller
             })
             ->addColumn('mata_kuliah', function ($sertifikasi) {
                 return $sertifikasi->mata_kuliah_sertifikasi->pluck('nama_matakuliah')->implode(', ');
+            })
+            ->addColumn('peserta_sertifikasi', function ($sertifikasi) {
+                return $sertifikasi->detail_peserta_sertifikasi->pluck('nama_lengkap')->implode(', ');
             })
             ->addColumn('aksi', function ($sertifikasi) {
                 $btn = '<button onclick="modalAction(\'' . url('/sertifikasi/' . $sertifikasi->id_sertifikasi . '/show') . '\')" class="btn btn-info btn-sm">Detail</button> ';
@@ -91,6 +120,7 @@ class SertifikasiController extends Controller
 
         $bidangMinat = BidangMinatModel::select('id_bidang_minat', 'nama_bidang_minat')->get();
         $mataKuliah = MataKuliahModel::select('id_matakuliah', 'nama_matakuliah')->get();
+        $user = UserModel::select('user_id', 'nama_lengkap')->get();
         // dd($mataKuliah);
 
         return view('sertifikasi.create')->with([
@@ -99,6 +129,7 @@ class SertifikasiController extends Controller
             'periode' => $periode,
             'bidangMinat' => $bidangMinat,
             'mataKuliah' => $mataKuliah,
+            'user' => $user,
         ]);
     }
 
@@ -112,6 +143,7 @@ class SertifikasiController extends Controller
 
                 'id_bidang_minat' => 'required',
                 'id_matakuliah' => 'required',
+                'user_id' => 'nullable',
 
                 'nama_sertifikasi' => 'required|string|min:5',
                 'no_sertifikasi' => 'required|string|max:255',
@@ -136,43 +168,78 @@ class SertifikasiController extends Controller
             // Inisialisasi variabel untuk menyimpan path file
             $bukti_sertifikasi = null;
 
-            // Cek apakah file bukti sertifikasi diunggah
-            if ($request->hasFile('bukti_sertifikasi')) {
-                $bukti_sertifikasi = time() . '_' . $request->file('bukti_sertifikasi')->getClientOriginalName();
-                $request->file('bukti_sertifikasi')->storeAs('public/images/', $bukti_sertifikasi);
+
+            /** @var User */
+            $user = Auth::user();
+            if ($user->id_level == 1) {
+                // Cek apakah file bukti sertifikasi diunggah
+                if ($request->hasFile('bukti_sertifikasi')) {
+                    $bukti_sertifikasi = time() . '_' . $request->file('bukti_sertifikasi')->getClientOriginalName();
+                    $request->file('bukti_sertifikasi')->storeAs('public/images/', $bukti_sertifikasi);
+                }
+
+                // Simpan data user dengan hanya field yang diperlukan
+                $sertifikasi = SertifikasiModel::create([
+                    'nama_sertifikasi'  => $request->nama_sertifikasi,
+                    'no_sertifikasi'      => $request->no_sertifikasi,
+                    'jenis'      => $request->jenis,
+                    'tanggal'      => $request->tanggal,
+                    'bukti_sertifikasi'      => $bukti_sertifikasi,
+                    'masa_berlaku'      => $request->masa_berlaku,
+                    'kuota_peserta'      => $request->kuota_peserta,
+                    'biaya'      => $request->biaya,
+                    'id_vendor_sertifikasi'  => $request->id_vendor_sertifikasi,
+                    'id_jenis_sertifikasi'  => $request->id_jenis_sertifikasi,
+                    'id_periode'  => $request->id_periode
+                ]);
+
+                $sertifikasi->bidang_minat_sertifikasi()->sync($request->id_bidang_minat);
+                $sertifikasi->mata_kuliah_sertifikasi()->sync($request->id_matakuliah);
+                $sertifikasi->detail_peserta_sertifikasi()->sync($request->user_id);
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data user berhasil disimpan'
+                ]);
+            } else {
+                // Cek apakah file bukti sertifikasi diunggah
+                if ($request->hasFile('bukti_sertifikasi')) {
+                    $bukti_sertifikasi = time() . '_' . $request->file('bukti_sertifikasi')->getClientOriginalName();
+                    $request->file('bukti_sertifikasi')->storeAs('public/images/', $bukti_sertifikasi);
+                }
+
+                // Simpan data user dengan hanya field yang diperlukan
+                $sertifikasi = SertifikasiModel::create([
+                    'nama_sertifikasi'  => $request->nama_sertifikasi,
+                    'no_sertifikasi'      => $request->no_sertifikasi,
+                    'jenis'      => $request->jenis,
+                    'tanggal'      => $request->tanggal,
+                    'bukti_sertifikasi'      => $bukti_sertifikasi,
+                    'masa_berlaku'      => $request->masa_berlaku,
+                    'kuota_peserta'      => $request->kuota_peserta,
+                    'biaya'      => $request->biaya,
+                    'id_vendor_sertifikasi'  => $request->id_vendor_sertifikasi,
+                    'id_jenis_sertifikasi'  => $request->id_jenis_sertifikasi,
+                    'id_periode'  => $request->id_periode
+                ]);
+
+                $sertifikasi->bidang_minat_sertifikasi()->sync($request->id_bidang_minat);
+                $sertifikasi->mata_kuliah_sertifikasi()->sync($request->id_matakuliah);
+
+                // Mendapatkan user yang sedang login
+                $userId = Auth::user();
+
+                // Cek apakah user bukan admin (id_level != 1)
+                if ($userId && $userId->id_level != 1) {
+                    // Tambahkan ke tabel detail_peserta_sertifikasi
+                    $sertifikasi->detail_peserta_sertifikasi()->attach($userId);
+                }
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data user berhasil disimpan'
+                ]);
             }
-
-            // Simpan data user dengan hanya field yang diperlukan
-            $sertifikasi = SertifikasiModel::create([
-                'nama_sertifikasi'  => $request->nama_sertifikasi,
-                'no_sertifikasi'      => $request->no_sertifikasi,
-                'jenis'      => $request->jenis,
-                'tanggal'      => $request->tanggal,
-                'bukti_sertifikasi'      => $bukti_sertifikasi,
-                'masa_berlaku'      => $request->masa_berlaku,
-                'kuota_peserta'      => $request->kuota_peserta,
-                'biaya'      => $request->biaya,
-                'id_vendor_sertifikasi'  => $request->id_vendor_sertifikasi,
-                'id_jenis_sertifikasi'  => $request->id_jenis_sertifikasi,
-                'id_periode'  => $request->id_periode
-            ]);
-
-            $sertifikasi->bidang_minat_sertifikasi()->sync($request->id_bidang_minat);
-            $sertifikasi->mata_kuliah_sertifikasi()->sync($request->id_matakuliah);
-
-            // Mendapatkan user yang sedang login
-            $userId = Auth::user();
-
-            // Cek apakah user bukan admin (id_level != 1)
-            if ($userId && $userId->id_level != 1) {
-                // Tambahkan ke tabel detail_peserta_sertifikasi
-                $sertifikasi->detail_peserta_sertifikasi()->attach($userId);
-            }
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Data user berhasil disimpan'
-            ]);
         }
         return redirect('/');
     }
@@ -194,6 +261,7 @@ class SertifikasiController extends Controller
 
         $bidangMinat = BidangMinatModel::select('id_bidang_minat', 'nama_bidang_minat')->get();
         $mataKuliah = MataKuliahModel::select('id_matakuliah', 'nama_matakuliah')->get();
+        $user = UserModel::select('user_id', 'nama_lengkap')->get();
 
         return view('sertifikasi.edit', [
             'sertifikasi' => $sertifikasi,
@@ -202,6 +270,7 @@ class SertifikasiController extends Controller
             'periode' => $periode,
             'bidangMinat' => $bidangMinat,
             'mataKuliah' => $mataKuliah,
+            'user' => $user,
         ]);
     }
 
@@ -215,6 +284,7 @@ class SertifikasiController extends Controller
 
                 'id_bidang_minat' => 'required',
                 'id_matakuliah' => 'required',
+                'user_id' => 'nullable',
 
                 'nama_sertifikasi' => 'required|string|min:5',
                 'no_sertifikasi' => 'required|string|max:255',
@@ -241,6 +311,9 @@ class SertifikasiController extends Controller
             // Inisialisasi variabel untuk menyimpan path file
             $bukti_sertifikasi = null;
 
+            /** @var User */
+            $user = Auth::user();
+
             // Cek apakah file bukti sertifikasi diunggah
             if ($request->hasFile('bukti_sertifikasi')) {
                 $bukti_sertifikasi = time() . '_' . $request->file('bukti_sertifikasi')->getClientOriginalName();
@@ -262,8 +335,7 @@ class SertifikasiController extends Controller
                         'id_jenis_sertifikasi'  => $request->id_jenis_sertifikasi,
                         'id_periode'  => $request->id_periode
                     ]);
-                }
-                else {
+                } else {
                     $sertifikasi->update([
                         'nama_sertifikasi'  => $request->nama_sertifikasi,
                         'no_sertifikasi'      => $request->no_sertifikasi,
@@ -277,14 +349,17 @@ class SertifikasiController extends Controller
                         'id_periode'  => $request->id_periode
                     ]);
                 }
-                
+
                 $sertifikasi->bidang_minat_sertifikasi()->sync($request->id_bidang_minat);
                 $sertifikasi->mata_kuliah_sertifikasi()->sync($request->id_matakuliah);
+
+                if ($user->id_level == 1) {
+                    $sertifikasi->detail_peserta_sertifikasi()->sync($request->user_id);
+                }
                 return response()->json([
                     'status' => true,
                     'message' => 'Data berhasil diupdate'
                 ]);
-
             } else {
                 return response()->json([
                     'status' => false,
@@ -307,15 +382,15 @@ class SertifikasiController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             // Temukan data sertifikasi berdasarkan ID
             $sertifikasi = SertifikasiModel::find($id);
-    
+
             if ($sertifikasi) {
                 // Hapus relasi many-to-many dengan MataKuliah dan BidangMinat
                 $sertifikasi->mata_kuliah_sertifikasi()->detach();
                 $sertifikasi->bidang_minat_sertifikasi()->detach();
-    
+
                 // Hapus data sertifikasi
                 $sertifikasi->delete();
-    
+
                 return response()->json([
                     'status' => true,
                     'message' => 'Data berhasil dihapus'
@@ -327,7 +402,7 @@ class SertifikasiController extends Controller
                 ]);
             }
         }
-    
+
         // Jika bukan request AJAX atau JSON, redirect ke halaman utama
         return redirect('/');
     }

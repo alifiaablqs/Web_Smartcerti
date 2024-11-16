@@ -66,7 +66,11 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
      
-      
+      <li class="nav-item">
+        <a href="{{ url('logout') }}" class="nav-link" role="button">
+          <i class="fas fa-sign-out-alt"></i>
+        </a>
+      </li>
 
      
       <!-- Notifications Dropdown Menu -->
