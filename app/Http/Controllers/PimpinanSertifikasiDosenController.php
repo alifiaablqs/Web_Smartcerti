@@ -52,14 +52,7 @@ class PimpinanSertifikasiDosenController extends Controller
             'kuota_peserta',
             'biaya'
         )
-        ->with([
-            'vendor_sertifikasi:id,nama',
-            'jenis_sertifikasi:id,nama_jenis_sertifikasi',
-            'periode:id,tahun_periode',
-            'bidang_minat_sertifikasi:id,nama_bidang_minat',
-            'mata_kuliah_sertifikasi:id,nama_matakuliah',
-            'detail_peserta_sertifikasi:id,nama_lengkap'
-        ]);
+            ->with('vendor_sertifikasi', 'jenis_sertifikasi', 'periode', 'bidang_minat_sertifikasi', 'mata_kuliah_sertifikasi', 'detail_peserta_sertifikasi');
         
 
         return DataTables::of($sertifikasis)

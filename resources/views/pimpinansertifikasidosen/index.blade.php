@@ -68,7 +68,7 @@
             dataSertifikasi = $('#table_sertifikasi').DataTable({
                 serverSide: true,
                 ajax: {
-                    url: "{{ url('sertifikasi/list') }}",
+                    url: "{{ url('pimpinansertifikasidosen/list') }}",
                     dataType: "json",
                     type: "POST",
                 },

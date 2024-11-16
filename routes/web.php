@@ -183,7 +183,7 @@ Route::prefix('periode')->group(function () {
 
 
 Route::get('/pimpinansertifikasidosen', [PimpinanSertifikasiDosenController::class, 'index']);
-Route::get('/pimpinansertifikasidosen/list', [PimpinanSertifikasiDosenController::class, 'list'])->name('pimpinansertifikasidosen.list');
+Route::post('/pimpinansertifikasidosen/list', [PimpinanSertifikasiDosenController::class, 'list']);
 
 
 });
