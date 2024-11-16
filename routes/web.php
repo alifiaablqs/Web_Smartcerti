@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JenisPelatihanController;
 use App\Http\Controllers\PelatihanController;
 use App\Http\Controllers\PeriodeController;
+use App\Http\Controllers\PimpinanSertifikasiDosenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SertifikasiController;
 
@@ -180,18 +181,10 @@ Route::prefix('periode')->group(function () {
     Route::get('/{id}/confirm', [PeriodeController::class, 'confirm']);
 });
 
-//dosen
-Route::group(['prefix' => 'dosensertifikasi'], function () {
-    Route::get('/', [DosenSertifikasiController::class, 'index']);
-    Route::post('/list', [DosenSertifikasiController::class, 'list']);
-    Route::get('/create', [DosenSertifikasiController::class, 'create']);
-    Route::post('/store', [DosenSertifikasiController::class, 'store']);
-    Route::get('/{id}/show', [DosenSertifikasiController::class, 'show']);
-    Route::get('/{id}/edit', [DosenSertifikasiController::class, 'edit']);
-    Route::put('/{id}/update', [DosenSertifikasiController::class, 'update']);
-    Route::get('/{id}/confirm', [DosenSertifikasiController::class, 'confirm']);
-    Route::delete('/{id}/delete', [DosenSertifikasiController::class, 'delete']); 
-});
+
+Route::get('/pimpinansertifikasidosen', [PimpinanSertifikasiDosenController::class, 'index']);
+Route::get('/pimpinansertifikasidosen/list', [PimpinanSertifikasiDosenController::class, 'list'])->name('pimpinansertifikasidosen.list');
+
 
 });
 

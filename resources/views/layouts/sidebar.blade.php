@@ -124,22 +124,6 @@
           <p>Periode</p>
         </a>
         </li>
-    
-    <!-- Dosen -->
-    <li class="nav-header">Dosen</li> 
-    <li class="nav-item">
-        <a href="{{ url('/dosenpelatihan') }}" class="nav-link {{ ($activeMenu == 
-        'dosenpelatihan') ? 'active': ''}}">
-          <i class="nav-icon far fa-bookmark"></i>
-          <p>Pelatihan</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{ url('/dosensertifikasi') }}" class="nav-link {{ ($activeMenu == 
-        'dosensertifikasi') ? 'active': ''}}">
-          <i class="nav-icon far fa-bookmark"></i>
-          <p>Sertifikasi</p>
-        </a>
 
     <!-- Pimpinan -->
     <li class="nav-header">Pimpinan</li> 
