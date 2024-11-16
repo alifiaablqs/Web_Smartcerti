@@ -1,53 +1,5 @@
-<style>
-  .modal-dialog {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  }
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-  .modal-content {
-      width: 80%;
-      justify-content: center;
-  }
-
-  .modal-header {
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  }
-
-  .modal-header .profile-icon {
-      margin-right: 10px;
-  }
-
-  .modal-footer {
-      text-align: center;
-  }
-
-  .profile-info {
-      margin-bottom: 20px;
-  }
-
-  .large-icon {
-      font-size: 5em;
-  }
-
-  /* Mengubah warna navbar menjadi warna #EF5428 */
-  .main-header.navbar {
-      background-color: #EF5428; /* Warna orange-red */
-      color: #ffffff; /* Teks putih untuk kontras */
-  }
-
-  .navbar-light .navbar-nav .nav-link {
-      color: #ffffff; /* Teks pada link navbar berwarna putih */
-  }
-
-  .navbar-light .navbar-nav .nav-link:hover {
-      color: #f8f9fa; /* Warna lebih cerah ketika di-hover */
-  }
-
-</style>
 
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -66,11 +18,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
      
-      <li class="nav-item">
-        <a href="{{ url('logout') }}" class="nav-link" role="button">
-          <i class="fas fa-sign-out-alt"></i>
-        </a>
-      </li>
+   
 
      
       <!-- Notifications Dropdown Menu -->
@@ -105,7 +53,35 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      
-    </ul>
-  </nav>
+      <!-- Profile dan Dropdown Logout -->
+<li class="nav-item dropdown">
+    <a class="nav-link" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        @if(Auth::user()->avatar && file_exists(public_path('storage/photos/' . Auth::user()->avatar)))
+            <img src="{{ asset('storage/photos/' . Auth::user()->avatar) }}" class="rounded-circle" style="width: 40px; height: 40px;" alt="User Avatar">
+        @else
+            <img src="{{ asset('img/default-profile.png') }}" class="rounded-circle" style="width: 40px; height: 40px;" alt="Default User Avatar">
+        @endif
+        <span class="ml-2">{{ Auth::user()->username }}</span>
+    </a>
+
+    <!-- Dropdown Menu -->
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" style="width: 280px; padding: 20px;">
+        <div class="dropdown-item text-center">
+            @if(Auth::user()->avatar && file_exists(public_path('storage/photos/' . Auth::user()->avatar)))
+                <img src="{{ asset('storage/photos/' . Auth::user()->avatar) }}" class="img-fluid rounded-circle" style="width: 80px; height: 80px;" alt="User Avatar">
+            @else
+                <img src="{{ asset('img/default-profile.png') }}" class="img-fluid rounded-circle" style="width: 80px; height: 80px;" alt="Default User Avatar">
+            @endif
+            <p class="text-muted" style="margin-bottom: 5px;">Login sebagai {{ Auth::user()->role }}</p> <!-- Reduced margin-bottom -->
+            <h5 class="mt-1">{{ Auth::user()->username }}</h5> <!-- Adjusted margin-top to mt-1 -->
+        </div>
+
+        <a class="dropdown-item text-center btn profile-btn my-2" href="{{ route('profile.index') }}" style="width: 100%;">Profile</a>
+
+        <!-- Tombol Logout -->
+        <a class="dropdown-item text-center btn logout-btn my-2" href="{{ url('logout') }}" style="width: 100%;">Logout</a>
+    </div>
+</li>
+</ul>
+</nav>
   <!-- /.navbar -->

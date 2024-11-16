@@ -1,33 +1,25 @@
-<div class="sidebar">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
  <!-- Brand Logo -->
  <a href="{{ url('/') }}" class="brand-link">
  <img src="{{ asset('assets/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 1; background-color: white;">
       <span class="brand-text font-weight-bold text-light">SMARTCERTI</span>
     </a>
 
-<!-- Sidebar user panel (optional) -->
-<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="assets/user.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
-        </div>
-      </div>
-
   <!-- Sidebar Search Form -->
-  <div class="form-inline mt-2">
-    <div class="input-group" data-widget="sidebar-search">
-      <input class="form-control form-control-sidebar" type="search" 
-      placeholder="Search" aria-label="Search">
-      <div class="input-group-append"> 
-        <button class="btn btn-sidebar">
-          <i class="fas fa-search fa-fw"></i>
-        </button>
-      </div>
+<div class="form-inline mt-2 mx-3"> <!-- Tambahkan mx-3 untuk margin horizontal -->
+  <div class="input-group" data-widget="sidebar-search">
+    <input class="form-control form-control-sidebar" type="search" 
+    placeholder="Search" aria-label="Search">
+    <div class="input-group-append"> 
+      <button class="btn btn-sidebar">
+        <i class="fas fa-search fa-fw"></i>
+      </button>
     </div>
   </div>
+</div>
 
+<div class="sidebar">
   <!-- Sidebar Menu -->
   <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" 
@@ -60,7 +52,7 @@
       <li class="nav-header">Manage Pelatihan dan Sertifikasi</li> 
       <li class="nav-item">
         <a href="{{ url('/pelatihan') }}" class="nav-link {{ ($activeMenu == 
-        'kategori') ? 'active': ''}}">
+        'pelatihan') ? 'active': ''}}">
           <i class="nav-icon far fa-bookmark"></i>
           <p>Pelatihan</p>
         </a>
@@ -133,6 +125,39 @@
         </a>
         </li>
     
+    <!-- Dosen -->
+    <li class="nav-header">Dosen</li> 
+    <li class="nav-item">
+        <a href="{{ url('/dosenpelatihan') }}" class="nav-link {{ ($activeMenu == 
+        'dosenpelatihan') ? 'active': ''}}">
+          <i class="nav-icon far fa-bookmark"></i>
+          <p>Pelatihan</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url('/dosensertifikasi') }}" class="nav-link {{ ($activeMenu == 
+        'dosensertifikasi') ? 'active': ''}}">
+          <i class="nav-icon far fa-bookmark"></i>
+          <p>Sertifikasi</p>
+        </a>
+
+    <!-- Pimpinan -->
+    <li class="nav-header">Pimpinan</li> 
+    <li class="nav-item">
+        <a href="{{ url('/pimpinanpelatihan') }}" class="nav-link {{ ($activeMenu == 
+        'pimpinanpelatihan') ? 'active': ''}}">
+          <i class="nav-icon far fa-bookmark"></i>
+          <p>Pelatihan</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url('/pimpinansertifikasi') }}" class="nav-link {{ ($activeMenu == 
+        'pimpinansertifikasi') ? 'active': ''}}">
+          <i class="nav-icon far fa-bookmark"></i>
+          <p>Sertifikasi</p>
+        </a>
+      </li>
+
     </ul>
   </nav>   
 </div>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BidangMinatController;
 use App\Http\Controllers\DashboardPimpinanController;
+use App\Http\Controllers\DosenSertifikasiController;
 use App\Http\Controllers\JenisSertifikasiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LevelController;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JenisPelatihanController;
 use App\Http\Controllers\PelatihanController;
 use App\Http\Controllers\PeriodeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SertifikasiController;
 
 Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
@@ -25,8 +27,11 @@ Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 Route::middleware(['auth'])->group(function(){
 
 Route::get('/', [DashboardPimpinanController::class, 'index']);
+
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::patch('/{id}', [ProfileController::class, 'update'])->name('profile.update');
 // user
-Route::group(['prefix' => 'user', 'middleware' => 'authorize:ADM,PMN,DSN'], function() {
+Route::group(['prefix' => 'user', 'middleware' => 'authorize:ADM'], function() {
     Route::get('/', [UserController::class, 'index']);        
     Route::post('/list', [UserController::class, 'list']);  
     Route::get('/create', [UserController::class, 'create']);   
@@ -52,7 +57,7 @@ Route::group(['prefix' => 'level', 'middleware' => 'authorize:ADM'], function ()
     Route::delete('/{id}/delete', [LevelController::class, 'delete']); 
 });
 
-//level
+
 Route::group(['prefix' => 'sertifikasi'], function () {
     Route::get('/', [SertifikasiController::class, 'index']);
     Route::post('/list', [SertifikasiController::class, 'list']);
@@ -173,6 +178,19 @@ Route::prefix('periode')->group(function () {
     Route::get('/export_pdf', [PeriodeController::class, 'export_pdf']);
     Route::post('/import_ajax', [PeriodeController::class, 'import_ajax']);
     Route::get('/{id}/confirm', [PeriodeController::class, 'confirm']);
+});
+
+//dosen
+Route::group(['prefix' => 'dosensertifikasi'], function () {
+    Route::get('/', [DosenSertifikasiController::class, 'index']);
+    Route::post('/list', [DosenSertifikasiController::class, 'list']);
+    Route::get('/create', [DosenSertifikasiController::class, 'create']);
+    Route::post('/store', [DosenSertifikasiController::class, 'store']);
+    Route::get('/{id}/show', [DosenSertifikasiController::class, 'show']);
+    Route::get('/{id}/edit', [DosenSertifikasiController::class, 'edit']);
+    Route::put('/{id}/update', [DosenSertifikasiController::class, 'update']);
+    Route::get('/{id}/confirm', [DosenSertifikasiController::class, 'confirm']);
+    Route::delete('/{id}/delete', [DosenSertifikasiController::class, 'delete']); 
 });
 
 });
