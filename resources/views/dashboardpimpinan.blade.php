@@ -41,7 +41,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+              <h3>{{ $jumlahPelatihan }}</h3> <!-- Tampilkan jumlah data -->
 
                 <p>Pelatihan Dosen</p>
               </div>
@@ -53,20 +53,21 @@
           </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
+          <!-- small box -->
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h3>{{ $jumlahSertifikasi }}</h3> <!-- Tampilkan jumlah data -->
 
-                <p>Sertifikasi Dosen</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-stalker"></i>
-              </div>
-              <a href="{{ url('pimpinansertifikasidosen') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <p>Sertifikasi Dosen</p>
             </div>
+            <div class="icon">
+              <i class="ion ion-person-stalker"></i>
+            </div>
+            <a href="{{ url('pimpinansertifikasidosen') }}" class="small-box-footer">
+              More info <i class="fas fa-arrow-circle-right"></i>
+            </a>
           </div>
-          <!-- ./col -->
         </div>
+
         <!-- /.row -->
 @endsection

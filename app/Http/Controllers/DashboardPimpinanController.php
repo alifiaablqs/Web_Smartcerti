@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\PelatihanModel;
+use App\Models\SertifikasiModel;
+
 class DashboardPimpinanController extends Controller
 {
     public function index()
@@ -11,8 +14,18 @@ class DashboardPimpinanController extends Controller
         ];
 
         $activeMenu = 'dashboard';
+        // Hitung jumlah data sertifikasi dosen
+        $jumlahSertifikasi = SertifikasiModel::count();
 
-        return view('dashboardpimpinan', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu]);
-    }
+         // Hitung jumlah data pelatihan dosen
+         $jumlahPelatihan = PelatihanModel::count();
 
+        // Kirim data ke view
+        return view('dashboardpimpinan', [
+            'breadcrumb' => $breadcrumb,
+            'activeMenu' => $activeMenu,
+            'jumlahPelatihan' => $jumlahPelatihan,
+            'jumlahSertifikasi' => $jumlahSertifikasi // Kirim jumlah sertifikasi ke view
+        ]);
+        }
 }
