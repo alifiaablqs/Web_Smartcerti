@@ -406,4 +406,97 @@ class SertifikasiController extends Controller
         // Jika bukan request AJAX atau JSON, redirect ke halaman utama
         return redirect('/');
     }
+
+    public function create_rekomendasi()
+    {
+        // Mengambil id_level dan nama_level dari tabel level
+        $vendorSertifikasi = VendorSertifikasiModel::select('id_vendor_sertifikasi', 'nama')->get();
+        $jenisSertifikasi = JenisSertifikasiModel::select('id_jenis_sertifikasi', 'nama_jenis_sertifikasi')->get();
+        $periode = PeriodeModel::select('id_periode', 'tahun_periode')->get();
+
+        $bidangMinat = BidangMinatModel::select('id_bidang_minat', 'nama_bidang_minat')->get();
+        $mataKuliah = MataKuliahModel::select('id_matakuliah', 'nama_matakuliah')->get();
+        // $user = UserModel::select('user_id', 'nama_lengkap')->get();
+        // Mengambil data user beserta status_sertifikasi dari tabel pivot
+        $user = UserModel::with(['detail_peserta_sertifikasi' => function ($query) {
+            $query->select(
+                'detail_peserta_sertifikasi.user_id',
+                'detail_peserta_sertifikasi.id_sertifikasi',
+                'detail_peserta_sertifikasi.status_sertifikasi'
+            );
+        }])->get();
+
+        return view('sertifikasi.create_rekomendasi')->with([
+            'vendorSertifikasi' => $vendorSertifikasi,
+            'jenisSertifikasi' => $jenisSertifikasi,
+            'periode' => $periode,
+            'bidangMinat' => $bidangMinat,
+            'mataKuliah' => $mataKuliah,
+            'user' => $user,
+        ]);
+    }
+
+    public function store_rekomendasi(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'id_vendor_sertifikasi' => 'required|integer',
+                'id_jenis_sertifikasi' => 'required|integer',
+                'id_periode' => 'required|integer',
+
+                'id_bidang_minat' => 'required',
+                'id_matakuliah' => 'required',
+                'user_id' => 'required',
+
+                'nama_sertifikasi' => 'required|string|min:5',
+                'jenis' => 'required',
+                'tanggal' => 'required|date',
+                'masa_berlaku' => 'required',
+                'kuota_peserta' => 'required|integer',
+                'biaya' => 'required|string|max:255',
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors()
+                ]);
+            }
+
+
+            // Simpan data user dengan hanya field yang diperlukan
+            $sertifikasi = SertifikasiModel::create([
+                'nama_sertifikasi'  => $request->nama_sertifikasi,
+                'jenis'      => $request->jenis,
+                'tanggal'      => $request->tanggal,
+                'masa_berlaku'      => $request->masa_berlaku,
+                'kuota_peserta'      => $request->kuota_peserta,
+                'biaya'      => $request->biaya,
+                'id_vendor_sertifikasi'  => $request->id_vendor_sertifikasi,
+                'id_jenis_sertifikasi'  => $request->id_jenis_sertifikasi,
+                'id_periode'  => $request->id_periode
+            ]);
+
+            $sertifikasi->bidang_minat_sertifikasi()->sync($request->id_bidang_minat);
+            $sertifikasi->mata_kuliah_sertifikasi()->sync($request->id_matakuliah);
+
+            // Menyimpan user_id ke dalam pivot tabel dengan status 'menunggu'
+            if (!empty($request->user_id)) {
+                $userData = [];
+                foreach ($request->user_id as $userId) {
+                    $userData[$userId] = ['status_sertifikasi' => 'menunggu'];
+                }
+                $sertifikasi->detail_peserta_sertifikasi()->attach($userData);
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data user berhasil disimpan'
+            ]);
+        }
+        return redirect('/');
+    }
 }

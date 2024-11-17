@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('title')
-    | Sertifikasi
+    | Penerimaan Permintaan
 @endsection
 
 @section('content')
@@ -10,14 +10,6 @@
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
-            <div class="card-tools">
-                <button onclick="modalAction(`{{ url('/sertifikasi/create') }}`)" class="btn btn-success"
-                    style="background-color: #EF5428; border-color: #EF5428;">Tambah</button>
-                @if (Auth::user()->id_level == 1)
-                    <button onclick="modalAction(`{{ url('/sertifikasi/create_rekomendasi') }}`)" class="btn btn-success"
-                        style="background-color: #EF5428; border-color: #EF5428;">Tambah Rekomendasi</button>
-                @endif
-            </div>
         </div>
         <div class="card-body">
             @if (session('success'))
@@ -26,26 +18,19 @@
             @if (session('error'))
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_sertifikasi">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_penerimaan_permintaan">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Nama Vendor</th>
                         <th>Jenis Bidang</th>
                         <th>Periode</th>
-                        <th>Nama Sertifikasi</th>
-                        <th>No Sertifikasi</th>
+                        <th>Nama Program</th>
+                        <th>Kategori</th>
                         <th>Jenis</th>
                         <th>Tanggal</th>
-                        {{-- <th>Bukti Sertifikasi</th> --}}
-                        <th>Masa Berlaku</th>
-                        {{-- <th>Kuota Peserta</th> --}}
-                        {{-- <th>Biaya</th> --}}
-                        <th>Tag Bidang Minat</th>
-                        <th>Tag Mata Kuliah</th>
-                        @if (Auth::user()->id_level == 1)
-                            <th>Nama Peserta</th>
-                        @endif
+                        <th>Kuota</th>
+                        <th>Biaya</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -71,9 +56,6 @@
         }
         var dataSertifikasi;
         $(document).ready(function() {
-            // Cek apakah user adalah admin (id_level = 1)
-            var isAdmin = {{ Auth::user()->id_level == 1 ? 'true' : 'false' }};
-
             var columns = [{
                     data: "DT_RowIndex",
                     className: "text-center",
@@ -89,11 +71,20 @@
                     searchable: true
                 },
                 {
-                    data: "jenis_sertifikasi.nama_jenis",
+                    data: null,
                     className: "",
-                    width: "9%",
+                    width: "6%",
                     orderable: false,
                     searchable: true,
+                    render: function(data, type, row) {
+                        if (row.kategori === 'sertifikasi') {
+                            return row.jenis_sertifikasi.nama_jenis_sertifikasi;
+                        } else if (row.kategori === 'pelatihan') {
+                            return row.jenis_sertifikasi.nama_jenis_pelatihan;
+                        } else {
+                            return '-';
+                        }
+                    }
                 },
                 {
                     data: "periode.tahun_periode",
@@ -103,21 +94,24 @@
                     searchable: false
                 },
                 {
-                    data: "nama_sertifikasi",
+                    data: "nama_program",
                     className: "",
                     width: "9%",
                     orderable: true,
                     searchable: true
                 },
                 {
-                    data: "no_sertifikasi",
+                    data: "kategori", // Sertifikasi atau Pelatihan
+                    render: function(data) {
+                        return data ? data : '-';
+                    },
                     className: "",
-                    width: "6%",
+                    width: "8%",
                     orderable: false,
-                    searchable: true
+                    searchable: false
                 },
                 {
-                    data: "jenis",
+                    data: "jenis_level",
                     className: "",
                     width: "6%",
                     orderable: false,
@@ -131,29 +125,16 @@
                     searchable: false
                 },
                 {
-                    data: "masa_berlaku",
+                    data: "kuota_peserta",
                     className: "",
-                    width: "7%",
+                    width: "8%",
                     orderable: false,
                     searchable: false
                 },
                 {
-                    data: "bidang_minat",
-                    render: function(data, type, row) {
-                        return row.bidang_minat ? row.bidang_minat : '-';
-                    },
+                    data: "biaya",
                     className: "",
-                    width: "10%",
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: "mata_kuliah",
-                    render: function(data, type, row) {
-                        return row.mata_kuliah ? row.mata_kuliah : '-';
-                    },
-                    className: "",
-                    width: "10%",
+                    width: "8%",
                     orderable: false,
                     searchable: false
                 },
@@ -166,24 +147,11 @@
                 }
             ];
 
-            // Tambahkan kolom "Nama Peserta" jika user adalah admin
-            if (isAdmin) {
-                columns.splice(11, 0, {
-                    data: "peserta_sertifikasi",
-                    render: function(data, type, row) {
-                        return row.peserta_sertifikasi ? row.peserta_sertifikasi : '-';
-                    },
-                    className: "",
-                    width: "10%",
-                    orderable: false,
-                    searchable: false
-                });
-            }
-
-            dataSertifikasi = $('#table_sertifikasi').DataTable({
+            dataSertifikasi = $('#table_penerimaan_permintaan').DataTable({
                 serverSide: true,
+                processing: true,
                 ajax: {
-                    url: "{{ url('sertifikasi/list') }}",
+                    url: "{{ url('penerimaanpermintaan/list') }}",
                     dataType: "json",
                     type: "POST",
                 },

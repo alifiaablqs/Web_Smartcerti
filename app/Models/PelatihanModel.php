@@ -45,8 +45,18 @@ class PelatihanModel extends Model
         return $this->belongsTo(PeriodeModel::class, 'id_periode', 'id_periode');
     }
 
-    public function user(): BelongsToMany
+    public function bidang_minat_pelatihan(): BelongsToMany
     {
-        return $this->belongsToMany(PelatihanModel::class, 'detail_peserta_pelatihan', 'id_pelatihan' ,'user_id');
+        return $this->belongsToMany(BidangMinatModel::class, 'detail_bidang_minat_pelatihan', 'id_pelatihan','id_bidang_minat')->withPivot('id_bidang_minat');;
+    }
+
+    public function mata_kuliah_pelatihan(): BelongsToMany
+    {
+        return $this->belongsToMany(MataKuliahModel::class, 'detail_matakuliah_pelatihan', 'id_pelatihan' ,'id_matakuliah')->withPivot('id_matakuliah');
+    }
+
+    public function detail_peserta_pelatihan(): BelongsToMany
+    {
+        return $this->belongsToMany(UserModel::class, 'detail_peserta_pelatihan', 'id_pelatihan' ,'user_id')->withPivot('user_id');
     }
 }
