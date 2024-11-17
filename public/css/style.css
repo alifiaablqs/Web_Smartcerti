@@ -125,27 +125,6 @@ h5 {
     margin-right: 15px; /* Jarak kanan */
 }  
 
-/* Login View */
-body {
-    background-image: url('{{ asset("public/assets/login.jpg") }}');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-}
-
-.card.card-outline.card-primary {
-    border-color: #375E97 !important;
-}
-
-.btn-custom {
-    background-color: #375E97;
-    color: white;
-    border-color: #375E97;
-}
 
 
   
