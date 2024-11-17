@@ -15,19 +15,30 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
-    
+
     <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <style>
+        body {
+            background-image: url('{{ asset("assets/login.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
         .card.card-outline.card-primary {
             border-color: #375E97 !important;
         }
+
         .btn-custom {
             background-color: #375E97;
             color: white;
             border-color: #375E97;
         }
-
-        
     </style>
 </head>
 <body class="hold-transition login-page">
