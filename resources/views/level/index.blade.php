@@ -6,10 +6,7 @@
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">{{ $page->title }}</h3>
-        <div class="card-tools">
-            <!-- Tambah Ajax Button -->
-            <button onclick="modalAction(`{{ url('/level/create') }}`)" class="btn btn-success" style="background-color: #EF5428; border-color: #EF5428;">Tambah</button>
-        </div>
+        
     </div>
     <div class="card-body">
         @if (session('success'))
@@ -39,7 +36,7 @@
                     <th>ID</th>
                     <th>Kode Level</th>
                     <th>Nama Level</th>
-                    <th>Aksi</th>
+                    
                 </tr>
             </thead>
         </table>
@@ -95,12 +92,8 @@
                         data: "nama_level", 
                         orderable: true, 
                         searchable: true 
-                    },
-                    { 
-                        data: "aksi", 
-                        orderable: false, 
-                        searchable: false 
                     }
+                   
                 ]
             });
 
