@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\BidangMinatController;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\api\MataKuliahController;
+use App\Http\Controllers\Api\PelatihanController;
 use App\Http\Controllers\Api\SertifikasiController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -18,11 +19,25 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::get('sertifikasis', [SertifikasiController::class, 'index']);
+Route::post('sertifikasis', [SertifikasiController::class, 'store']);
+Route::get('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'show']);
+Route::put('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'update']);
+Route::delete('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'destroy']);
+
+Route::get('pelatihans', [PelatihanController::class, 'index']);
+Route::post('pelatihans', [PelatihanController::class, 'store']);
+Route::get('pelatihans/{pelatihan}', [PelatihanController::class, 'show']);
+Route::put('pelatihans/{pelatihan}', [PelatihanController::class, 'update']);
+Route::delete('pelatihans/{pelatihan}', [PelatihanController::class, 'destroy']);
 
 Route::post('/login', App\Http\Controllers\Api\LoginController::class)->name('login');
 Route::post('/logout', App\Http\Controllers\Api\LogoutController::class)->name('logout');
 Route::middleware('auth:api')->get('/user', function(Request $request){
     return $request->user();
+
+
+    
 });
 Route::middleware(['auth:api'])->group(function () {
 Route::get('levels', [LevelController::class, 'index']);
@@ -49,9 +64,5 @@ Route::get('mataKuliahs/{mataKuliah}', [MataKuliahController::class, 'show']);
 Route::put('mataKuliahs/{mataKuliah}', [MataKuliahController::class, 'update']);
 Route::delete('mataKuliahs/{mataKuliah}', [MataKuliahController::class, 'destroy']);
 
-Route::get('sertifikasis', [SertifikasiController::class, 'index']);
-Route::post('sertifikasis', [SertifikasiController::class, 'store']);
-Route::get('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'show']);
-Route::put('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'update']);
-Route::delete('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'destroy']);
+
 });
