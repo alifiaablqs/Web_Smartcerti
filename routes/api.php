@@ -61,5 +61,5 @@ Route::delete('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'dest
 // Route::put('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'update']);
 // Route::delete('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'destroy']);
 
-
+//sss
 });
