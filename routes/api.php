@@ -54,4 +54,12 @@ Route::post('sertifikasis', [SertifikasiController::class, 'store']);
 Route::get('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'show']);
 Route::put('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'update']);
 Route::delete('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'destroy']);
+
+// Route::get('sertifikasis', [SertifikasiController::class, 'index']);
+// Route::post('sertifikasis', [SertifikasiController::class, 'store']);
+// Route::get('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'show']);
+// Route::put('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'update']);
+// Route::delete('sertifikasis/{sertifikasi}', [SertifikasiController::class, 'destroy']);
+
+
 });
